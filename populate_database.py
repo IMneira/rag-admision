@@ -2,11 +2,11 @@ import argparse
 import os
 import shutil
 from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
+from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from get_embedding import get_embedding
 from langchain_chroma import Chroma
-
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
@@ -28,9 +28,24 @@ def main():
     add_to_chroma(chunks)
 
 
-def load_documents():
-    document_loader = PyPDFDirectoryLoader(DATA_PATH)
-    return document_loader.load()
+def load_documents(file_types=[".txt"]):
+    documents = []
+
+    if ".pdf" in file_types:
+        print("Including .pdf in documents.")
+        pdf_loader = PyPDFDirectoryLoader(DATA_PATH)
+        documents.extend(pdf_loader.load())
+    else:
+        print("Skiping .pdf in documents")
+
+    if ".txt" in file_types:
+        print("Including .txt in documents.")
+        txt_loader = DirectoryLoader(DATA_PATH, glob="**/*.txt", loader_cls=TextLoader)
+        documents.extend(txt_loader.load())
+    else:
+        print("Skiping .txt in documents")
+
+    return documents
 
 
 def split_documents(documents: list[Document]):

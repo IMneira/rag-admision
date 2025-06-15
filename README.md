@@ -16,7 +16,7 @@ data/                 # Directorio donde se almacenan los documentos PDF
 
 Para ejecutar este proyecto, necesitas:
 
-1. Python 3.11 o superior
+1. Python 3.11
 2. Las dependencias listadas en requirements.txt
 
 ## Instalación
