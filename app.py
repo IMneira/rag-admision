@@ -4,7 +4,13 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from get_embedding import get_embedding
+import os
+from dotenv import load_dotenv
 
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 CHROMA_PATH = "chroma"
 
 PROMPT_TEMPLATE = """
@@ -38,7 +44,7 @@ def query_rag(query_text: str):
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=query_text)
 
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key="AIzaSyCAEzhzpI-XmKx9oFr_2ltplEUHperCaew")
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=API_KEY)
     response_text = model.invoke(prompt)
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
