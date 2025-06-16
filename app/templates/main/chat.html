@@ -63,7 +63,20 @@
       loadingMsg.remove();
       const botMsg = document.createElement("div");
       botMsg.className = "text-start mb-2";
-      botMsg.innerHTML = `<div class="p-2 bg-light border rounded" style="max-width: 90%; white-space: normal;">${marked.parse(data.respuesta)}</div>`;
+      botMsg.innerHTML = `
+        <div class="p-2 bg-light border rounded" style="max-width: 90%; white-space: normal;">
+          ${marked.parse(data.respuesta)}
+          ${data.fuentes && data.fuentes.length > 0 ? `
+            <hr>
+            <div>
+              <small class="text-muted">Fuentes:</small>
+              <ul class="mt-2">
+                ${data.fuentes.map(url => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+        </div>
+      `;
       historial.appendChild(botMsg);
     } catch (error) {
       loadingMsg.remove();

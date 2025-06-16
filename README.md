@@ -61,8 +61,8 @@ Este proyecto implementa un sistema de chatbot basado en Recuperación Aumentada
 1. Coloca los documentos PDF/TXT en `app/services/rag/data/`.
 2. Ejecuta:
     ```bash
-    python app/services/rag/web_scrapping.py # Esto solo es necesario ejecutar si es que se actualizaron los datos de la pagina de admisión
-    python app/services/rag/populate_database.py
+    python -m app.services.rag.web_scrapping # Esto solo es necesario ejecutar si es que se actualizaron los datos de la pagina de admisión
+    python -m app.services.rag.populate_database
     ```
    - El primer script descarga y convierte páginas web a TXT.
    - El segundo procesa los documentos, los divide en fragmentos, genera embeddings y los almacena en la base de datos vectorial Chroma.

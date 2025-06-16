@@ -64,7 +64,7 @@ def query_rag(query_text: str) -> str:
     formatted_response = f"Response: {response_text}\nSources: {sources}"
     print(formatted_response)
 
-    return response_text
+    return (response_text, sources)
 
 
 if __name__ == "__main__":
