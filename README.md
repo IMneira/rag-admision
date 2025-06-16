@@ -14,12 +14,12 @@ Este proyecto implementa un sistema de chatbot basado en Recuperación Aumentada
 │   ├── models             # Definición de modelos de datos
 │   ├── routes             # Rutas principales de la aplicación
 │   └── services
-│       └── bot
-│           ├── query.py                # Realiza consultas al sistema RAG
-│           ├── get_embedding.py        # Obtiene embeddings de texto
-│           ├── populate_database.py    # Pobla la base de datos vectorial
-│           ├── chroma/                 # Base de datos vectorial Chroma
-│           └── data/                   # Documentos fuente (PDF/TXT)
+│       └── rag
+│           ├── query_engine.py                # Realiza consultas al sistema RAG
+│           ├── embedding.py        # Obtiene embeddings de texto
+│           ├── populate.py    # Pobla la base de datos vectorial
+├── chroma/                 # Base de datos vectorial Chroma
+├── data/                   # Documentos fuente (PDF/TXT)
 ├── .gitignore
 ├── README.md
 └── requirements.txt
@@ -58,25 +58,25 @@ Este proyecto implementa un sistema de chatbot basado en Recuperación Aumentada
 
 ### Poblar la base de datos
 
-1. Coloca los documentos PDF/TXT en `app/services/bot/data/`.
+1. Coloca los documentos PDF/TXT en `app/services/rag/data/`.
 2. Ejecuta:
     ```bash
-    python app/services/bot/web_scrapping.py
-    python app/services/bot/populate_database.py
+    python app/services/rag/web_scrapping.py # Esto solo es necesario ejecutar si es que se actualizaron los datos de la pagina de admisión
+    python app/services/rag/populate_database.py
     ```
    - El primer script descarga y convierte páginas web a TXT.
    - El segundo procesa los documentos, los divide en fragmentos, genera embeddings y los almacena en la base de datos vectorial Chroma.
 
 3. Para reiniciar la base de datos:
     ```bash
-    python app/services/bot/populate_database.py --reset
+    python app/services/rag/populate_database.py --reset
     ```
 
 ### Consultar vía terminal
 
 Realiza una consulta directamente:
 ```bash
-python app/services/bot/query.py "<tu pregunta>"
+python app/services/rag/query.py "<tu pregunta>"
 ```
 
 ### Ejecutar la aplicación principal
