@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Chat de Admisión{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-ENjdO4Dr2bkBIFxQpeoO2jzB1zN6dZLlrbzQnE4JkHGkt1JjLr2e8AJzU8U5e9Jk"
+  crossorigin="anonymous"
+/>
+
+<div class="container py-5">
+  <h1 class="text-center mb-4">Chat en Vivo - Admisión</h1>
+  <div class="card shadow-sm">
+    <div class="card-body">
+        <div id="chat-historial" class="mt-3" style="max-height: 400px; overflow-y: auto; max-width: 100%;"></div>
+        <hr>
+        <div class="mb-3">
+            <input type="text" id="pregunta" class="form-control" placeholder="Escribe tu pregunta aquí..." />
+        </div>
+        <div class="d-grid gap-2">
+            <button onclick="enviarPregunta()" class="btn btn-primary">Enviar</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function enviarPregunta() {
+    const preguntaInput = document.getElementById("pregunta");
+    const pregunta = preguntaInput.value.trim();
+    const historial = document.getElementById("chat-historial");
+
+    if (!pregunta) return;
+
+    // Mostrar mensaje del usuario
+    const userMsg = document.createElement("div");
+    userMsg.className = "text-end mb-2";
+    userMsg.innerHTML = `<span class="badge bg-primary text-wrap">${pregunta}</span>`;
+    historial.appendChild(userMsg);
+
+    preguntaInput.value = "";
+
+    // Mensaje de carga
+    const loadingMsg = document.createElement("div");
+    loadingMsg.className = "text-start mb-2 text-muted";
+    loadingMsg.textContent = "Escribiendo...";
+    historial.appendChild(loadingMsg);
+    historial.scrollTop = historial.scrollHeight;
+
+    try {
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pregunta })
+      });
+
+      const data = await res.json();
+
+      // Reemplazar loading con respuesta del bot
+      loadingMsg.remove();
+      const botMsg = document.createElement("div");
+      botMsg.className = "text-start mb-2";
+      botMsg.innerHTML = `<div class="p-2 bg-light border rounded" style="max-width: 90%; white-space: normal;">${marked.parse(data.respuesta)}</div>`;
+      historial.appendChild(botMsg);
+    } catch (error) {
+      loadingMsg.remove();
+      const errorMsg = document.createElement("div");
+      errorMsg.className = "text-danger mb-2";
+      errorMsg.textContent = "Error al obtener la respuesta. Intenta nuevamente.";
+      historial.appendChild(errorMsg);
+    }
+
+    historial.scrollTop = historial.scrollHeight;
+  }
+
+  // Enviar con Enter
+  document.getElementById("pregunta").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      enviarPregunta();
+    }
+  });
+</script>
+{% endblock %}

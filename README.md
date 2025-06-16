@@ -1,15 +1,34 @@
 ## Estructura del Proyecto
 
 ```
-.env                   # Archivo de variables de entorno
-.gitignore             # Configuración de Git para ignorar archivos
-app.py                 # Aplicación principal
-get_embedding.py       # Función para obtener embeddings
-populate_database.py   # Script para poblar la base de datos
-README.md              # Este archivo
-requirements.txt       # Dependencias del proyecto
-chroma/               # Directorio de la base de datos vectorial
-data/                 # Directorio donde se almacenan los documentos PDF
+├── .env                   # Archivo de variables de entorno
+├── app
+│   ├── __init__.py
+│   ├── db
+│   │   ├── __init__.py
+│   │   ├── create.py
+│   │   ├── drop.py
+│   │   ├── migrate.py
+│   │   ├── reset.py
+│   │   ├── seed.py
+│   │   └── setup.py
+│   ├── models
+│   │   └── __init__.py
+│   ├── routes
+│   │   ├── __init__.py
+│   │   └── main_routes.py
+│   └── services
+│       ├── __init__.py
+│       └── bot
+│           ├── __init__.py
+│           ├── query.py                #archivo donde se encuentra la query
+│           ├── get_embedding.py       # Función para obtener embeddings
+│           ├── populate_database.py   # Script para poblar la base de datos
+│           ├── chroma/               # Directorio de la base de datos vectorial
+│           └── data/                 # Directorio donde se almacenan los documentos PDF
+├── .gitignore             # Configuración de Git para ignorar archivos
+├── README.md              # Este archivo
+└── requirements.txt       # Dependencias del proyecto
 ```
 
 ## Requisitos
@@ -43,14 +62,17 @@ API_KEY=clave_api_google_ai_studio
 
 ### Poblando la base de datos
 
-Para agregar documentos PDF a la base de datos, colócalos en el directorio data y ejecuta:
+Para agregar documentos PDF a la base de datos, colócalos en el directorio app/services/bot/data y ejecuta:
 
 ```bash
-python populate_database.py
+python app/services/bot/web_scrapping.py
+python app/services/bot/populate_database.py
 ```
 
-Este script:
-- Cargará los documentos PDF desde el directorio data
+Estos scripts:
+- Realizan un web scrapping de la pagina web de admisión (https://admision.uandes.cl)
+- Guardan los html como txt en el directorio data
+- Cargará los documentos PDF y/o TXT desde el directorio data (por defoult solo guarda los TXT)
 - Dividirá los documentos en fragmentos más pequeños
 - Creará embeddings para cada fragmento
 - Almacenará los fragmentos y sus embeddings en la base de datos Chroma
@@ -58,15 +80,23 @@ Este script:
 Si necesitas reiniciar la base de datos, puedes usar el parámetro `--reset`:
 
 ```bash
-python populate_database.py --reset
+python app/services/bot/populate_database.py --reset
 ```
+
+### Consultar via terminal
+
+```bash
+python app/services/bot/query.py <query>
+```
+
+En caso de necesitar consultar via terminal se puede ejecutar el comando
 
 ### Ejecutando la aplicación
 
 Para iniciar la aplicación principal:
 
 ```bash
-python app.py [query]
+python run.py [query]
 ```
 
 La aplicación permitirá realizar consultas sobre los documentos almacenados utilizando procesamiento de lenguaje natural.

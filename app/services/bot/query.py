@@ -3,7 +3,7 @@ from langchain_chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from get_embedding import get_embedding
+from app.services.bot.get_embedding import get_embedding
 import os
 from dotenv import load_dotenv
 
@@ -46,6 +46,9 @@ def query_rag(query_text: str):
 
     model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=API_KEY)
     response_text = model.invoke(prompt)
+    
+    if hasattr(response_text, "content"):
+        response_text = response_text.content
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
     formatted_response = f"Response: {response_text}\nSources: {sources}"
