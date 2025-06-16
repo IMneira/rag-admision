@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from app.services.bot.query import query_rag
+from app.services.rag.query_engine import query_rag
 
 main_bp = Blueprint('main', __name__)
 

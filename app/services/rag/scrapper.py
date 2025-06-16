@@ -1,5 +1,7 @@
+import json
 import os
 import time
+import hashlib
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
@@ -26,14 +28,8 @@ def extract_links(soup, base_url):
     return links
 
 def clean_filename(url):
-    parsed = urlparse(url)
-    path = parsed.path.strip("/").replace("/", "_")
-    if not path:
-        path = "home"
-    max_length = 100
-    if len(path) > max_length:
-        path = path[:max_length]
-    return path
+    hashed = hashlib.md5(url.encode("utf-8")).hexdigest()
+    return hashed
 
 def save_text(content, filename):
     os.makedirs(DATA_PATH, exist_ok=True)
@@ -45,12 +41,12 @@ def scrape_page(url):
         response = requests.get(url, headers=HEADERS, timeout=10)
         response.raise_for_status()
     except Exception as e:
-        print(f"[ERROR] No se pudo acceder a {url}: {e}")
+        print(f"[ERROR] Could not access {url}: {e}")
         return "", set([])
 
     content_type = response.headers.get("Content-Type", "")
     if "text/html" not in content_type:
-        print(f"[AVISO] Contenido no HTML en {url} (Content-Type: {content_type}). Se omite.")
+        print(f"[NOTICE] Non-HTML content at {url} (Content-Type: {content_type}). Skipping.")
         return "", set([])
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -59,18 +55,21 @@ def scrape_page(url):
     return text, links
 
 def main():
+    index_mapping = {}
+    start_time = time.time()
     while unvisited_urls:
         current_url = unvisited_urls.pop(0)
 
         if current_url in visited_urls:
             continue
 
-        print(f"[INFO] Scrapeando: {current_url}")
+        print(f"[INFO] Scraping: {current_url}")
         text, links = scrape_page(current_url)
 
         if text:
             filename = clean_filename(current_url)
             save_text(text, filename)
+            index_mapping[filename] = current_url
 
         visited_urls.add(current_url)
         new_links = links - visited_urls
@@ -78,7 +77,11 @@ def main():
 
         time.sleep(WAIT_TIME)
 
-    print("[FIN] Scraping completo.")
-    
+    with open(os.path.join(DATA_PATH, "url_index.json"), "w", encoding="utf-8") as index_file:
+        json.dump(index_mapping, index_file, indent=2, ensure_ascii=False)
+
+    duration = time.time() - start_time
+    print(f"[END] Scraping completed in {duration:.2f} seconds.")    
+
 if __name__ == "__main__":
     main()

@@ -1,121 +1,123 @@
+# Chatbot de Admisión - Proyecto RAG
+
+Este proyecto implementa un sistema de chatbot basado en Recuperación Aumentada por Generación (RAG) para responder preguntas sobre documentos de admisión universitaria. Utiliza procesamiento de lenguaje natural y una base de datos vectorial para encontrar y contextualizar respuestas precisas.
+
+---
+
 ## Estructura del Proyecto
 
 ```
-├── .env                   # Archivo de variables de entorno
+├── .env                   # Variables de entorno (API keys, configuración)
 ├── app
 │   ├── __init__.py
-│   ├── db
-│   │   ├── __init__.py
-│   │   ├── create.py
-│   │   ├── drop.py
-│   │   ├── migrate.py
-│   │   ├── reset.py
-│   │   ├── seed.py
-│   │   └── setup.py
-│   ├── models
-│   │   └── __init__.py
-│   ├── routes
-│   │   ├── __init__.py
-│   │   └── main_routes.py
+│   ├── db                 # Scripts para gestión de la base de datos relacional
+│   ├── models             # Definición de modelos de datos
+│   ├── routes             # Rutas principales de la aplicación
 │   └── services
-│       ├── __init__.py
 │       └── bot
-│           ├── __init__.py
-│           ├── query.py                #archivo donde se encuentra la query
-│           ├── get_embedding.py       # Función para obtener embeddings
-│           ├── populate_database.py   # Script para poblar la base de datos
-│           ├── chroma/               # Directorio de la base de datos vectorial
-│           └── data/                 # Directorio donde se almacenan los documentos PDF
-├── .gitignore             # Configuración de Git para ignorar archivos
-├── README.md              # Este archivo
-└── requirements.txt       # Dependencias del proyecto
+│           ├── query.py                # Realiza consultas al sistema RAG
+│           ├── get_embedding.py        # Obtiene embeddings de texto
+│           ├── populate_database.py    # Pobla la base de datos vectorial
+│           ├── chroma/                 # Base de datos vectorial Chroma
+│           └── data/                   # Documentos fuente (PDF/TXT)
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
+
+---
 
 ## Requisitos
 
-Para ejecutar este proyecto, necesitas:
+- Python 3.11
+- Dependencias listadas en `requirements.txt`
 
-1. Python 3.11
-2. Las dependencias listadas en requirements.txt
+---
 
 ## Instalación
 
-1. Clona este repositorio:
-```bash
-git clone https://github.com/tu-usuario/rag-admision.git
-cd rag-admision
-```
+1. Clona el repositorio:
+    ```bash
+    git clone https://github.com/tu-usuario/rag-admision.git
+    cd rag-admision
+    ```
+2. Crea un entorno virtual e instala dependencias:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # En Windows: venv\Scripts\activate
+    pip install -r requirements.txt
+    ```
+3. Crea un archivo `.env` en la raíz con tus credenciales:
+    ```
+    API_KEY=clave_api_google_ai_studio
+    ```
 
-2. Crea un entorno virtual e instala las dependencias:
-```bash
-python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-3. Crea un archivo .env en la raíz del proyecto con tus credenciales de API:
-```
-API_KEY=clave_api_google_ai_studio
-```
+---
 
 ## Uso
 
-### Poblando la base de datos
+### Poblar la base de datos
 
-Para agregar documentos PDF a la base de datos, colócalos en el directorio app/services/bot/data y ejecuta:
+1. Coloca los documentos PDF/TXT en `app/services/bot/data/`.
+2. Ejecuta:
+    ```bash
+    python app/services/bot/web_scrapping.py
+    python app/services/bot/populate_database.py
+    ```
+   - El primer script descarga y convierte páginas web a TXT.
+   - El segundo procesa los documentos, los divide en fragmentos, genera embeddings y los almacena en la base de datos vectorial Chroma.
 
+3. Para reiniciar la base de datos:
+    ```bash
+    python app/services/bot/populate_database.py --reset
+    ```
+
+### Consultar vía terminal
+
+Realiza una consulta directamente:
 ```bash
-python app/services/bot/web_scrapping.py
-python app/services/bot/populate_database.py
+python app/services/bot/query.py "<tu pregunta>"
 ```
 
-Estos scripts:
-- Realizan un web scrapping de la pagina web de admisión (https://admision.uandes.cl)
-- Guardan los html como txt en el directorio data
-- Cargará los documentos PDF y/o TXT desde el directorio data (por defoult solo guarda los TXT)
-- Dividirá los documentos en fragmentos más pequeños
-- Creará embeddings para cada fragmento
-- Almacenará los fragmentos y sus embeddings en la base de datos Chroma
+### Ejecutar la aplicación principal
 
-Si necesitas reiniciar la base de datos, puedes usar el parámetro `--reset`:
-
+Inicia la aplicación para consultas interactivas:
 ```bash
-python app/services/bot/populate_database.py --reset
+python run.py
 ```
 
-### Consultar via terminal
+---
 
-```bash
-python app/services/bot/query.py <query>
-```
+## Funcionamiento Interno
 
-En caso de necesitar consultar via terminal se puede ejecutar el comando
+- **RAG (Recuperación Aumentada por Generación):**
+    1. Los documentos se fragmentan y se convierten en embeddings vectoriales.
+    2. Ante una consulta, se buscan los fragmentos más similares semánticamente.
+    3. Los fragmentos recuperados sirven como contexto para generar una respuesta precisa.
 
-### Ejecutando la aplicación
+- **Embeddings:**  
+  El script `get_embedding.py` convierte texto en vectores usando el modelo configurado.
 
-Para iniciar la aplicación principal:
+- **Base de datos Chroma:**  
+  Almacena fragmentos, embeddings y metadatos (título, página, autor, etc.).
 
-```bash
-python run.py [query]
-```
-
-La aplicación permitirá realizar consultas sobre los documentos almacenados utilizando procesamiento de lenguaje natural.
-
-## Funcionamiento
-
-El sistema utiliza un enfoque RAG (Recuperación Aumentada por Generación):
-
-1. Los documentos se dividen en fragmentos y se convierten en embeddings vectoriales
-2. Cuando se realiza una consulta, se buscan los fragmentos más similares semánticamente
-3. Los fragmentos recuperados sirven como contexto para generar una respuesta más precisa
-
-El script get_embedding.py proporciona la función para convertir texto en embeddings vectoriales utilizando el modelo especificado en la configuración (aquí generan los embeddings usando tu propia máquina).
+---
 
 ## Estructura de la base de datos
 
-La base de datos Chroma almacena:
-- Los fragmentos de texto de los documentos
-- Los embeddings vectoriales correspondientes
-- Metadatos como el título del documento, número de página, autor, etc.
+- Fragmentos de texto de los documentos
+- Embeddings vectoriales
+- Metadatos asociados
 
+---
 
+## Notas
+
+- El proyecto está preparado para ser extendido con nuevas fuentes de datos y modelos de embeddings.
+- Se recomienda mantener actualizadas las dependencias y proteger las credenciales en `.env`.
+
+---
+
+## Licencia
+
+MIT

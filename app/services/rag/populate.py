@@ -1,34 +1,32 @@
 import argparse
 import os
 import shutil
-from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
+
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
 from langchain.schema.document import Document
-from get_embedding import get_embedding
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
+
+from app.services.rag.embedding import get_embedding
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
 
-
 def main():
-
-    # Check if the database should be cleared (using the --clear flag).
     parser = argparse.ArgumentParser()
     parser.add_argument("--reset", action="store_true", help="Reset the database.")
     args = parser.parse_args()
+
     if args.reset:
         print("✨ Clearing Database")
         clear_database()
 
-    # Create (or update) the data store.
     documents = load_documents()
     chunks = split_documents(documents)
     add_to_chroma(chunks)
 
-
-def load_documents(file_types=[".txt"]):
+def load_documents(file_types: list[str] = [".txt"]) -> list[Document]:
     documents = []
 
     if ".pdf" in file_types:
@@ -36,19 +34,19 @@ def load_documents(file_types=[".txt"]):
         pdf_loader = PyPDFDirectoryLoader(DATA_PATH)
         documents.extend(pdf_loader.load())
     else:
-        print("Skiping .pdf in documents")
+        print("Skipping .pdf in documents")
 
     if ".txt" in file_types:
         print("Including .txt in documents.")
-        txt_loader = DirectoryLoader(DATA_PATH, glob="**/*.txt", loader_cls=TextLoader)
+        txt_loader = DirectoryLoader(DATA_PATH, glob="**/*.txt",
+                                     loader_cls=TextLoader)
         documents.extend(txt_loader.load())
     else:
-        print("Skiping .txt in documents")
+        print("Skipping .txt in documents")
 
     return documents
 
-
-def split_documents(documents: list[Document]):
+def split_documents(documents: list[Document]) -> list[Document]:
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=800,
         chunk_overlap=80,
@@ -57,40 +55,30 @@ def split_documents(documents: list[Document]):
     )
     return text_splitter.split_documents(documents)
 
-
-def add_to_chroma(chunks: list[Document]):
-    # Load the existing database.
+def add_to_chroma(chunks: list[Document]) -> None:
     db = Chroma(
-        persist_directory=CHROMA_PATH, embedding_function=get_embedding()
+        persist_directory=CHROMA_PATH,
+        embedding_function=get_embedding()
     )
 
-    # Calculate Page IDs.
     chunks_with_ids = calculate_chunk_ids(chunks)
-
-    # Add or Update the documents.
-    existing_items = db.get(include=[])  # IDs are always included by default
+    existing_items = db.get(include=[])
     existing_ids = set(existing_items["ids"])
     print(f"Number of existing documents in DB: {len(existing_ids)}")
 
-    # Only add documents that don't exist in the DB.
-    new_chunks = []
-    for chunk in chunks_with_ids:
-        if chunk.metadata["id"] not in existing_ids:
-            new_chunks.append(chunk)
+    new_chunks = [
+        chunk for chunk in chunks_with_ids
+        if chunk.metadata["id"] not in existing_ids
+    ]
 
-    if len(new_chunks):
+    if new_chunks:
         print(f"👉 Adding new documents: {len(new_chunks)}")
         new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
         db.add_documents(new_chunks, ids=new_chunk_ids)
     else:
         print("✅ No new documents to add")
 
-
-def calculate_chunk_ids(chunks):
-
-    # This will create IDs like "data/test.pdf:6:2"
-    # Page Source : Page Number : Chunk Index
-
+def calculate_chunk_ids(chunks: list[Document]) -> list[Document]:
     last_page_id = None
     current_chunk_index = 0
 
@@ -99,26 +87,20 @@ def calculate_chunk_ids(chunks):
         page = chunk.metadata.get("page")
         current_page_id = f"{source}:{page}"
 
-        # If the page ID is the same as the last one, increment the index.
         if current_page_id == last_page_id:
             current_chunk_index += 1
         else:
             current_chunk_index = 0
 
-        # Calculate the chunk ID.
         chunk_id = f"{current_page_id}:{current_chunk_index}"
         last_page_id = current_page_id
-
-        # Add it to the page meta-data.
         chunk.metadata["id"] = chunk_id
 
     return chunks
 
-
-def clear_database():
+def clear_database() -> None:
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
-
 
 if __name__ == "__main__":
     main()
