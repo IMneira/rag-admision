@@ -17,3 +17,7 @@ class Config:
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") else ["*"]
+
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    API_KEY = os.getenv("API_KEY")
+    GEMINI_MODEL = os.getenv("GEMINI_MODEL")

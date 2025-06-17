@@ -8,7 +8,7 @@ def create_app():
 
     CORS(app, origins=Config.CORS_ORIGINS)
     app.config.from_object(Config)
-    flask_db.init_app(app)
+    # flask_db.init_app(app)
 
     from app.routes import blueprints
     for bp in blueprints:

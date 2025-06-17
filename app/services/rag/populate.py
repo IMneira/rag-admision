@@ -1,17 +1,46 @@
 import argparse
 import os
 import shutil
+from collections import defaultdict
 
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
 from langchain.schema.document import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
+import tqdm
+import time
 
 from app.services.rag.embedding import get_embedding
+from app.services.rag.llm import get_llm
+from config import Config
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
+HEADER_TAG = "§§DOC_HEADER§§ "
+
+def build_headers(docs: list[Document]) -> dict[str, str]:
+    llm = get_llm()
+    grouped: dict[str, list[str]] = defaultdict(list)
+
+    for d in tqdm.tqdm(docs):
+        grouped[d.metadata["source"]].append(d.page_content)
+
+    headers: dict[str, str] = {}
+    for src, pages in tqdm.tqdm(grouped.items()):
+        whole_doc = "\n".join(pages)[:10000]          # stay under token limit
+        prompt = (
+            "You are a concise summarizer.\n"
+            "Write **three short sentences** (≤75 words total) that capture "
+            "the main context of this document so they can be prepended to "
+            "each chunk for retrieval-augmented generation.\n\n"
+            f"DOCUMENT:\n{whole_doc}\n\nHEADER:"
+        )
+        headers[src] = llm.complete(prompt).text.strip()
+        time.sleep(7)  # avoid rate limits
+
+    return headers
+    
 
 def main():
     parser = argparse.ArgumentParser()
@@ -22,8 +51,16 @@ def main():
         print("✨ Clearing Database")
         clear_database()
 
-    documents = load_documents()
+    documents = load_documents()[:20]
+    headers = build_headers(documents)
     chunks = split_documents(documents)
+
+    for chunk in chunks:
+        header = headers.get(chunk.metadata["source"])
+        if header:
+            chunk.page_content = f"{header}\n\n{chunk.page_content}"
+
+
     add_to_chroma(chunks)
 
 def load_documents(file_types: list[str] = [".txt"]) -> list[Document]:
