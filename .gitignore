@@ -116,3 +116,5 @@ env.bak/
 venv.bak/
 
 chroma/
+
+google_keys.json

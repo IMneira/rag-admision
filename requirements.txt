@@ -16,3 +16,7 @@ llama-index-llms-gemini
 llama-index-embeddings-gemini
 tqdm
 sentence-transformers
+google-api-python-client>=2.126.0
+google-auth>=2.29.0
+google-auth-httplib2>=0.2.0
+pypdf

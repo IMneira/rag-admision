@@ -5,6 +5,7 @@ from collections import defaultdict
 
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_community.document_loaders.pdf import PyPDFDirectoryLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain.schema.document import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
@@ -14,10 +15,13 @@ import time
 from app.services.rag.embedding import get_embedding
 from app.services.rag.llm import get_llm
 from config import Config
+from app.services.rag.drive_loader import iter_local_docs
+
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
 HEADER_TAG = "§§DOC_HEADER§§ "
+DRIVE_FOLDER_ID = '1rax_JCVVrzFoJBQn8OKPcDFZ5iLyMysN'
 
 def build_headers(docs: list[Document]) -> dict[str, str]:
     llm = get_llm()
@@ -45,13 +49,21 @@ def build_headers(docs: list[Document]) -> dict[str, str]:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--reset", action="store_true", help="Reset the database.")
+    parser.add_argument("--drive", action="store_true", help="Ingest documents from Google Drive folder.")
     args = parser.parse_args()
 
     if args.reset:
         print("✨ Clearing Database")
         clear_database()
 
-    documents = load_documents()[:20]
+    if args.drive:
+        print("✨ Ingesting documents from Google Drive")
+        documents = ingest_drive_folder(DRIVE_FOLDER_ID)
+        print(documents)
+    else:
+        print("✨ Ingesting documents from local data directory")
+        documents = load_documents()
+
     headers = build_headers(documents)
     chunks = split_documents(documents)
 
@@ -138,6 +150,34 @@ def calculate_chunk_ids(chunks: list[Document]) -> list[Document]:
 def clear_database() -> None:
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
+
+
+def ingest_drive_folder(folder_id: str):
+    docs = []
+    for path in iter_local_docs(folder_id):
+        if path.suffix == ".pdf":
+            loader = PyPDFLoader(str(path))
+        elif path.suffix == ".txt":
+            loader = TextLoader(str(path))
+        else:
+            print(f"Skipping unsupported file type: {path.suffix}")
+            continue
+
+        docs.extend(loader.load())
+
+    return docs
+
+    
+    
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     main()
