@@ -1,6 +1,7 @@
 import argparse
 import os
 import shutil
+import logging
 from collections import defaultdict
 
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
@@ -23,26 +24,44 @@ DATA_PATH = "data"
 HEADER_TAG = "§§DOC_HEADER§§ "
 DRIVE_FOLDER_ID = '1rax_JCVVrzFoJBQn8OKPcDFZ5iLyMysN'
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 def build_headers(docs: list[Document]) -> dict[str, str]:
     llm = get_llm()
     grouped: dict[str, list[str]] = defaultdict(list)
 
-    for d in tqdm.tqdm(docs):
-        grouped[d.metadata["source"]].append(d.page_content)
+    for d in tqdm.tqdm(docs, desc="Grouping documents"):
+        try:
+            grouped[d.metadata["source"]].append(d.page_content)
+        except Exception as e:
+            logging.error(f"Error processing document {d.metadata.get('source', 'unknown')}: {e}")
+            continue
 
     headers: dict[str, str] = {}
-    for src, pages in tqdm.tqdm(grouped.items()):
-        whole_doc = "\n".join(pages)[:10000]          # stay under token limit
-        prompt = (
-            "You are a concise summarizer.\n"
-            "Write **three short sentences** (≤75 words total) that capture "
-            "the main context of this document so they can be prepended to "
-            "each chunk for retrieval-augmented generation.\n\n"
-            f"DOCUMENT:\n{whole_doc}\n\nHEADER:"
-        )
-        headers[src] = llm.complete(prompt).text.strip()
-        time.sleep(7)  # avoid rate limits
+    failed_headers = []
+    
+    for src, pages in tqdm.tqdm(grouped.items(), desc="Building headers"):
+        try:
+            whole_doc = "\n".join(pages)[:10000]          # stay under token limit
+            prompt = (
+                "Eres un resumidor conciso.\n"
+                "Escribe **tres oraciones cortas** (≤75 palabras en total) que capturen "
+                "el contexto principal de este documento para que puedan ser "
+                "antepuestos a cada fragmento para la generación aumentada por recuperación.\n\n"
+                f"DOCUMENTO:\n{whole_doc}\n\nENCABEZADO:"
+            )
+            headers[src] = llm.complete(prompt).text.strip()
+            time.sleep(7)  # avoid rate limits
+        except Exception as e:
+            logging.error(f"Failed to build header for {src}: {e}")
+            failed_headers.append(src)
+            continue
 
+    if failed_headers:
+        logging.warning(f"Failed to build headers for {len(failed_headers)} documents: {failed_headers}")
+    
+    logging.info(f"Successfully built headers for {len(headers)} out of {len(grouped)} documents")
     return headers
     
 
@@ -52,47 +71,84 @@ def main():
     parser.add_argument("--drive", action="store_true", help="Ingest documents from Google Drive folder.")
     args = parser.parse_args()
 
-    if args.reset:
-        print("✨ Clearing Database")
-        clear_database()
+    try:
+        if args.reset:
+            print("✨ Clearing Database")
+            clear_database()
 
-    if args.drive:
-        print("✨ Ingesting documents from Google Drive")
-        documents = ingest_drive_folder(DRIVE_FOLDER_ID)
-        print(documents)
-    else:
-        print("✨ Ingesting documents from local data directory")
-        documents = load_documents()
+        if args.drive:
+            print("✨ Ingesting documents from Google Drive")
+            documents = ingest_drive_folder(DRIVE_FOLDER_ID)
+            print(f"Successfully loaded {len(documents)} documents from Drive")
+        else:
+            print("✨ Ingesting documents from local data directory")
+            documents = load_documents()
 
-    headers = build_headers(documents)
-    chunks = split_documents(documents)
+        if not documents:
+            logging.warning("No documents were loaded. Exiting.")
+            return
 
-    for chunk in chunks:
-        header = headers.get(chunk.metadata["source"])
-        if header:
-            chunk.page_content = f"{header}\n\n{chunk.page_content}"
+        logging.info(f"Total documents loaded: {len(documents)}")
+        
+        headers = build_headers(documents)
+        chunks = split_documents(documents)
 
+        successful_chunks = 0
+        for chunk in chunks:
+            try:
+                header = headers.get(chunk.metadata["source"])
+                if header:
+                    chunk.page_content = f"{header}\n\n{chunk.page_content}"
+                successful_chunks += 1
+            except Exception as e:
+                logging.error(f"Error processing chunk from {chunk.metadata.get('source', 'unknown')}: {e}")
+                continue
 
-    add_to_chroma(chunks)
+        logging.info(f"Successfully processed {successful_chunks} out of {len(chunks)} chunks")
+        
+        if successful_chunks > 0:
+            add_to_chroma(chunks)
+        else:
+            logging.error("No chunks were successfully processed. Nothing to add to database.")
+            
+    except Exception as e:
+        logging.error(f"Critical error in main process: {e}")
+        raise
 
 def load_documents(file_types: list[str] = [".txt"]) -> list[Document]:
     documents = []
+    failed_files = []
 
     if ".pdf" in file_types:
         print("Including .pdf in documents.")
-        pdf_loader = PyPDFDirectoryLoader(DATA_PATH)
-        documents.extend(pdf_loader.load())
+        try:
+            pdf_loader = PyPDFDirectoryLoader(DATA_PATH)
+            pdf_docs = pdf_loader.load()
+            documents.extend(pdf_docs)
+            logging.info(f"Successfully loaded {len(pdf_docs)} PDF documents")
+        except Exception as e:
+            logging.error(f"Failed to load PDF documents: {e}")
+            failed_files.append("PDF directory")
     else:
         print("Skipping .pdf in documents")
 
     if ".txt" in file_types:
         print("Including .txt in documents.")
-        txt_loader = DirectoryLoader(DATA_PATH, glob="**/*.txt",
-                                     loader_cls=TextLoader)
-        documents.extend(txt_loader.load())
+        try:
+            txt_loader = DirectoryLoader(DATA_PATH, glob="**/*.txt",
+                                         loader_cls=TextLoader)
+            txt_docs = txt_loader.load()
+            documents.extend(txt_docs)
+            logging.info(f"Successfully loaded {len(txt_docs)} TXT documents")
+        except Exception as e:
+            logging.error(f"Failed to load TXT documents: {e}")
+            failed_files.append("TXT directory")
     else:
         print("Skipping .txt in documents")
 
+    if failed_files:
+        logging.warning(f"Failed to load documents from: {failed_files}")
+    
     return documents
 
 def split_documents(documents: list[Document]) -> list[Document]:
@@ -102,30 +158,71 @@ def split_documents(documents: list[Document]) -> list[Document]:
         length_function=len,
         is_separator_regex=False,
     )
-    return text_splitter.split_documents(documents)
+    
+    successful_chunks = []
+    failed_documents = []
+    
+    for doc in tqdm.tqdm(documents, desc="Splitting documents"):
+        try:
+            chunks = text_splitter.split_documents([doc])
+            successful_chunks.extend(chunks)
+        except Exception as e:
+            logging.error(f"Failed to split document {doc.metadata.get('source', 'unknown')}: {e}")
+            failed_documents.append(doc.metadata.get('source', 'unknown'))
+            continue
+    
+    if failed_documents:
+        logging.warning(f"Failed to split {len(failed_documents)} documents: {failed_documents}")
+    
+    logging.info(f"Successfully split documents into {len(successful_chunks)} chunks")
+    return successful_chunks
 
 def add_to_chroma(chunks: list[Document]) -> None:
-    db = Chroma(
-        persist_directory=CHROMA_PATH,
-        embedding_function=get_embedding()
-    )
+    try:
+        db = Chroma(
+            persist_directory=CHROMA_PATH,
+            embedding_function=get_embedding()
+        )
 
-    chunks_with_ids = calculate_chunk_ids(chunks)
-    existing_items = db.get(include=[])
-    existing_ids = set(existing_items["ids"])
-    print(f"Number of existing documents in DB: {len(existing_ids)}")
+        chunks_with_ids = calculate_chunk_ids(chunks)
+        existing_items = db.get(include=[])
+        existing_ids = set(existing_items["ids"])
+        print(f"Number of existing documents in DB: {len(existing_ids)}")
 
-    new_chunks = [
-        chunk for chunk in chunks_with_ids
-        if chunk.metadata["id"] not in existing_ids
-    ]
+        new_chunks = [
+            chunk for chunk in chunks_with_ids
+            if chunk.metadata["id"] not in existing_ids
+        ]
 
-    if new_chunks:
-        print(f"👉 Adding new documents: {len(new_chunks)}")
-        new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
-        db.add_documents(new_chunks, ids=new_chunk_ids)
-    else:
-        print("✅ No new documents to add")
+        if new_chunks:
+            print(f"👉 Adding new documents: {len(new_chunks)}")
+            new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
+            
+            # Add documents in batches to handle potential failures
+            batch_size = 100
+            successful_batches = 0
+            failed_batches = 0
+            
+            for i in range(0, len(new_chunks), batch_size):
+                batch = new_chunks[i:i + batch_size]
+                batch_ids = new_chunk_ids[i:i + batch_size]
+                
+                try:
+                    db.add_documents(batch, ids=batch_ids)
+                    successful_batches += 1
+                    logging.info(f"Successfully added batch {successful_batches} ({len(batch)} documents)")
+                except Exception as e:
+                    failed_batches += 1
+                    logging.error(f"Failed to add batch {i//batch_size + 1}: {e}")
+                    continue
+            
+            logging.info(f"Database update complete: {successful_batches} successful batches, {failed_batches} failed batches")
+        else:
+            print("✅ No new documents to add")
+            
+    except Exception as e:
+        logging.error(f"Critical error accessing Chroma database: {e}")
+        raise
 
 def calculate_chunk_ids(chunks: list[Document]) -> list[Document]:
     last_page_id = None
@@ -154,17 +251,38 @@ def clear_database() -> None:
 
 def ingest_drive_folder(folder_id: str):
     docs = []
-    for path in iter_local_docs(folder_id):
-        if path.suffix == ".pdf":
-            loader = PyPDFLoader(str(path))
-        elif path.suffix == ".txt":
-            loader = TextLoader(str(path))
-        else:
-            print(f"Skipping unsupported file type: {path.suffix}")
+    failed_files = []
+    
+    try:
+        file_paths = list(iter_local_docs(folder_id))
+        logging.info(f"Found {len(file_paths)} files in Drive folder")
+    except Exception as e:
+        logging.error(f"Failed to list files from Drive folder {folder_id}: {e}")
+        return docs
+    
+    for path in tqdm.tqdm(file_paths, desc="Loading Drive documents"):
+        try:
+            if path.suffix == ".pdf":
+                loader = PyPDFLoader(str(path))
+            elif path.suffix == ".txt":
+                loader = TextLoader(str(path))
+            else:
+                logging.info(f"Skipping unsupported file type: {path.suffix} for {path}")
+                continue
+
+            file_docs = loader.load()
+            docs.extend(file_docs)
+            logging.debug(f"Successfully loaded {len(file_docs)} documents from {path}")
+            
+        except Exception as e:
+            logging.error(f"Failed to load document {path}: {e}")
+            failed_files.append(str(path))
             continue
 
-        docs.extend(loader.load())
-
+    if failed_files:
+        logging.warning(f"Failed to load {len(failed_files)} files from Drive: {failed_files}")
+    
+    logging.info(f"Successfully loaded {len(docs)} documents from Drive folder")
     return docs
 
     

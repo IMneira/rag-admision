@@ -6,7 +6,13 @@ from app.db import flask_db
 def create_app():
     app = Flask(__name__)
 
-    CORS(app, origins=Config.CORS_ORIGINS)
+    # Enhanced CORS configuration for React app
+    CORS(app, 
+         origins=Config.CORS_ORIGINS,
+         allow_headers=["Content-Type", "Authorization"],
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         supports_credentials=True)
+    
     app.config.from_object(Config)
     # flask_db.init_app(app)
 
