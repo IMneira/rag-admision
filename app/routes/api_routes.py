@@ -44,11 +44,11 @@ def save_document_to_data_dir(content, source_url=None):
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
     
-    file_path = os.path.join(data_dir, f"{content_hash}.txt")
+    file_path = os.path.join(data_dir, f"{content_hash}.md")
     
     # Check if file already exists
     if os.path.exists(file_path):
-        return content_hash, False  # File already exists
+        return content_hash, False, file_path  # File already exists
     
     # Save content
     with open(file_path, 'w', encoding='utf-8') as f:
@@ -68,7 +68,7 @@ def save_document_to_data_dir(content, source_url=None):
         with open(url_index_path, 'w', encoding='utf-8') as f:
             json.dump(url_index, f, indent=2, ensure_ascii=False)
     
-    return content_hash, True  # New file created
+    return content_hash, True, file_path  # New file created
 
 def load_url_index():
     """Load URL index from JSON file"""
@@ -296,18 +296,46 @@ def upload_pdf():
             )
         
         # Save to data directory
-        doc_hash, is_new = save_document_to_data_dir(pdf_text, source_url)
+        doc_hash, is_new, file_path = save_document_to_data_dir(pdf_text, source_url)
+        
+        # Process the document into the vector database if it's new
+        processing_result = None
+        if is_new:
+            try:
+                from app.services.rag.populate import process_single_document
+                processing_result = process_single_document(file_path, source_url)
+            except Exception as e:
+                # Don't fail the upload if processing fails
+                processing_result = {
+                    'success': False,
+                    'chunks_added': 0,
+                    'header_generated': False,
+                    'error': f'Processing failed: {str(e)}'
+                }
+        
+        response_data = {
+            'document_id': doc_hash,
+            'filename': secure_filename(file.filename),
+            'text_length': len(pdf_text),
+            'source_url': source_url,
+            'is_new': is_new,
+            'message': 'PDF uploaded successfully' if is_new else 'Document already exists in database'
+        }
+        
+        # Add processing information if document was processed
+        if processing_result:
+            response_data['processing'] = {
+                'success': processing_result['success'],
+                'chunks_added': processing_result['chunks_added'],
+                'header_generated': processing_result['header_generated'],
+                'ready_for_queries': processing_result['success']
+            }
+            if processing_result['error']:
+                response_data['processing']['error'] = processing_result['error']
         
         return format_response(
             success=True,
-            data={
-                'document_id': doc_hash,
-                'filename': secure_filename(file.filename),
-                'text_length': len(pdf_text),
-                'source_url': source_url,
-                'is_new': is_new,
-                'message': 'PDF uploaded successfully' if is_new else 'Document already exists in database'
-            }
+            data=response_data
         )
         
     except Exception as e:

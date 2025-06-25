@@ -263,6 +263,119 @@ def clear_database() -> None:
         shutil.rmtree(CHROMA_PATH)
 
 
+def process_single_document(file_path: str, source_url: str = None) -> dict:
+    """
+    Process a single uploaded document through the complete RAG pipeline.
+    
+    Args:
+        file_path: Path to the document file in the data directory
+        source_url: Optional source URL for the document
+        
+    Returns:
+        dict: Processing result with status and details
+    """
+    result = {
+        'success': False,
+        'chunks_added': 0,
+        'header_generated': False,
+        'error': None
+    }
+    
+    try:
+        # Load the single document
+        logging.info(f"Processing single document: {file_path}")
+        
+        if not os.path.exists(file_path):
+            result['error'] = f"File not found: {file_path}"
+            return result
+            
+        # Determine file type and load accordingly
+        file_extension = os.path.splitext(file_path)[1].lower()
+        
+        if file_extension == ".pdf":
+            loader = PyPDFLoader(file_path)
+        elif file_extension in [".txt", ".md"]:
+            loader = TextLoader(file_path)
+        else:
+            result['error'] = f"Unsupported file type: {file_extension}"
+            return result
+            
+        # Load document
+        documents = loader.load()
+        if not documents:
+            result['error'] = "No content could be loaded from the file"
+            return result
+            
+        logging.info(f"Loaded {len(documents)} document sections from {file_path}")
+        
+        # Build header for the document
+        try:
+            headers = build_headers(documents)
+            header = headers.get(documents[0].metadata["source"]) if headers else None
+            result['header_generated'] = bool(header)
+            logging.info(f"Generated header for document: {bool(header)}")
+        except Exception as e:
+            logging.warning(f"Failed to build header for {file_path}: {e}")
+            header = None
+            result['header_generated'] = False
+        
+        # Split documents into chunks
+        chunks = split_documents(documents)
+        if not chunks:
+            result['error'] = "No chunks were created from the document"
+            return result
+            
+        logging.info(f"Split document into {len(chunks)} chunks")
+        
+        # Add header to each chunk if available
+        if header:
+            for chunk in chunks:
+                chunk.page_content = f"{header}\n\n{chunk.page_content}"
+        
+        # Add chunks to Chroma database
+        try:
+            # Initialize database connection
+            db = Chroma(
+                persist_directory=CHROMA_PATH,
+                embedding_function=get_embedding()
+            )
+            
+            # Calculate chunk IDs
+            chunks_with_ids = calculate_chunk_ids(chunks)
+            
+            # Check for existing chunks
+            existing_items = db.get(include=[])
+            existing_ids = set(existing_items["ids"])
+            
+            # Filter out existing chunks
+            new_chunks = [
+                chunk for chunk in chunks_with_ids
+                if chunk.metadata["id"] not in existing_ids
+            ]
+            
+            if new_chunks:
+                new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
+                db.add_documents(new_chunks, ids=new_chunk_ids)
+                result['chunks_added'] = len(new_chunks)
+                logging.info(f"Added {len(new_chunks)} new chunks to database")
+            else:
+                result['chunks_added'] = 0
+                logging.info("All chunks already exist in database")
+            
+            result['success'] = True
+            
+        except Exception as e:
+            result['error'] = f"Failed to add chunks to database: {str(e)}"
+            logging.error(f"Database error for {file_path}: {e}")
+            return result
+            
+    except Exception as e:
+        result['error'] = f"Processing error: {str(e)}"
+        logging.error(f"Critical error processing {file_path}: {e}")
+        
+    return result
+
+
 def ingest_drive_folder(folder_id: str):
     docs = []
     failed_files = []

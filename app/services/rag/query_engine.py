@@ -97,7 +97,7 @@ def query_rag(query_text: str) -> str:
     prompt = prompt_template.format(context=context_text, question=query_text)
 
     model = ChatGoogleGenerativeAI(
-        model=Config.GEMINI_MODEL,
+        model="gemini-2.5-flash",
         google_api_key=API_KEY
     )
 
@@ -107,6 +107,8 @@ def query_rag(query_text: str) -> str:
         response_text = response_text.content
 
     sources = [doc.metadata.get("id", None) for doc, _ in core_hits]
+
+    print(f'Prompt: {prompt}')
 
     formatted_response = f"Response: {response_text}\nSources: {sources}"
     print(formatted_response)

@@ -801,5 +801,7 @@
   "aabdba454bd421ccfc840cbdc9189450": "http://admision.uandes.cl/matricula-2025/matricula",
   "3cdd9757ea6e7c0f46212194f612f539": "http://admision.uandes.cl/matricula-2025/retracto",
   "978f9424eaf9468c32d83593d06b044a": "http://admision.uandes.cl/matricula-2025/lista-de-espera",
-  "54003252b9013b9783c953cc3ab9f440": "http://admision.uandes.cl/matricula-2025/matricula-casos-especiales"
+  "54003252b9013b9783c953cc3ab9f440": "http://admision.uandes.cl/matricula-2025/matricula-casos-especiales",
+  "1ed1ff67d6708c2e9053a6d263f384fa": "uploaded:BTS-7960.pdf",
+  "c0402c67b65722f7f51cefb6ee883aca": "test://api_upload_test"
 }
