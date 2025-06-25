@@ -1,0 +1,318 @@
+# Educación de Párvulos
+
+**Source:** http://admision.uandes.cl/carreras/area-educacion/educacion-de-parvulos
+**Scraped:** 2025-06-25 13:54:10
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Carreras ](/carreras) [/ Área Educación ](/carreras/area-educacion) / Educación de Párvulos
+
+[ ](/carreras)
+
+### Escuela de Educación
+
+# educación de párvulos con menciones
+
+  
+
+
+##### ¿Por qué en la UANDES?
+
+  * __Beca de hasta 100% de cobertura en matrícula y arancel para egresados de colegios públicos y subvencionados.
+  * __Beca de Intercambio o Continuidad de Estudios de 120 UF.
+  * __Carrera acreditada por el máximo, 7 años.
+  * __Plan de estudios actualizado y alineado con estándares para carreras de Educación de Párvulos del Ministerio de Educación.
+  * __Formación teórico-práctica dividida por ciclo etario de la educación inicial.
+  * __Sistema de formación práctica todos los semestres de la carrera.
+  * __Mención en tres líneas optativas: Enseñanza del inglés, Humanidades Integradas y Ciencias Integradas.
+  * __Escuela con más de 25 años de trayectoria con altas tasas de empleabilidad a nivel nacional.
+
+
+
+[ __](https://www.youtube.com/watch?v=Xsr43QyHtHY&feature=youtu.be)
+
+#### Perfil de egreso
+
+El titulado de Educación de Párvulos con menciones de la Universidad de los Andes demuestra dominio de los conocimientos pedagógicos, didáctico disciplinares y profesionales propios de la educación inicial, y es capaz de favorecer el desarrollo integral de los estudiantes y lograr aprendizajes efectivos, identificando necesidades de aprendizaje e implementando estrategias metodológicas adecuadas al contexto. Está formado interdisciplinariamente con conocimientos propios de su área profesional y de otras áreas del saber. Además, cuenta con una formación general e integral que le permite valorar la dignidad y singularidad de la persona humana, actuar éticamente, reflexionar sobre las dimensiones y consecuencias de sus decisiones, y trabajar en equipo, con actitud de respeto y vocación de servicio a los demás.
+
+[ __Ley Carrera Docente](https://www.ayudamineduc.cl/ficha/ingreso-carreras-de-pedagogia)
+
+[__Formulario de contacto](https://admision.uandes.cl/formularios/formulario-carreras)
+
+[ Malla __](https://admision.uandes.cl/docs/default-source/carreras/documentos-area-educacion/documentos-educacion-de-parvulos/malla_educacion_de_parvulos_con_menciones_2022.pdf)
+
+##### Título Profesional
+
+Educador(a) de Párvulos
+
+##### Licenciatura
+
+Licenciado(a) en Educación
+
+##### Duración
+
+10 semestres
+
+##### MENCIONES
+
+Enseñanza del inglés, Humanidades Integradas y Ciencias Integradas
+
+## Información para postular el 2025
+
+### PUNTAJES
+
+    * __**Puntaje de corte 2025**  
+552,2 puntos PAES
+    * __**Puntaje mínimo de postulación**  
+550 puntos
+    * __**Puntaje promedio mínimo de Competencia Lectora y Matemática**  
+502 puntos
+
+
+
+### PONDERACIONES
+
+    * __**NEM**  
+20%
+    * __**Ranking**  
+25%
+    * __**Competencia Lectora**  
+25%
+    * __****Competencia** Matemática 1 (M1)**  
+15%
+    * __**Ciencias o Historia (Opcional)**  
+15%
+
+
+
+### VALORES Y ARANCELES
+
+    * __**Valor matrícula**  
+21 UF
+    * __**Arancel**  
+152 UF
+
+
+
+  
+
+
+  * Becas Colegios Públicos y Subvencionados
+  * Becas Colegios Particulares
+
+
+
+# Sé parte de los profesores del chile del futuro
+
+### **Colegios Públicos y Subvencionados**
+
+###### __Beca Profesores para Chile
+
+Beca académica de asignación automática que cubre el 100% de la matrícula y el arancel durante la duración oficial de la carrera más un año de gracia si quedas convocado. Además, podrías complementar esta beca con una beca de mantención si obtienes las becas del estado Juan Gómez Millas, Bicentenario o Beca de Excelencia Académica.
+
+[Más información ](/becas/beca-uandes-profesores-para-chile-colegios-publicos)
+
+###### __Beca UANDES Alimentación
+
+Beca que otorga un monto mensual como subsidio de alimentación para ser utilizado de marzo a diciembre en las instalaciones de la Universidad, dependiendo de la situación económica de cada alumno.
+
+[Más información ](/becas/beca-alimentacion-uandes)
+
+###### __Beca UANDES NEM
+
+Beca académica, que también es una vía de Admisión Directa previa a los resultados de la Prueba de Acceso a la Educación Superior (PAES), que ofrece un 70% de cobertura en el arancel con una matrícula de 2 UF. La cual podría llegar a un 100% de cobertura si se complementa con las becas del estado Juan Gómez Millas, Bicentenario o Beca de Excelencia Académica.
+
+[Más información ](/becas/beca-uandes-nem)
+
+###### __Beca Ejercito
+
+Beca que se otorga a los hijos de funcionarios del Ejército de Chile o del Hospital Militar de Santiago y consiste en una rebaja de un 50% en el costo anual del arancel de la carrera.
+
+[Más información ](/becas/beca-ejercito)
+
+###### __Beca UANDES Económica
+
+Beca socioeconómica que cubre entre un 15% y hasta un 70% de cobertura en el arancel y matrícula anual de la carrera, dependiendo de la situación económica del estudiante y su nucleo familiar, que será evaluada por acreditación socioeconómica anualmente por parte de la universidad. Esta beca requiere de una postulación previa.
+
+[Más información ](/becas/beca-uandes-economica)
+
+###### __Beca Armada de Chile
+
+Beca para hijos de funcionarios en servicio activo o en retiro de la Armada de Chile, contratados por la ley 18.476 que hayan ingresado vía admisión centralizada. La beca será de carácter anual y consistirá en una rebaja de un 50% en el arancel.
+
+[Más información ](/becas/beca-armada-de-chile)
+
+### **Colegios Particulares**
+
+###### __Beca por puntaje PAES
+
+Beca académica de asignación automática para estudiantes de enseñanza media que ofrece una cobertura entre el 20% y 100% en el arancel anual de la carrera, si quedas convocado y cumples con el puntaje ponderado requerido.
+
+[Más información ](/becas/beca-uandes-paes-colegios-particulares)
+
+###### Beca de Alimentación
+
+Beca que otorga un monto mensual como subsidio de alimentación para ser utilizado de marzo a diciembre en las instalaciones de la Universidad, dependiendo de la situación económica de cada alumno.
+
+[Más información ](/becas/beca-alimentacion-uandes)
+
+###### __Beca Profesores para Chile
+
+Beca académica de asignación automática para Continuidad de Estudios en la Universidad de los Andes, equivalente a 120 UF, para egresados de enseñanza media que sean convocados en la carrera y cumplan con el puntaje ponderado requerido.
+
+[Más información ](/becas/beca-uandes-profesores-para-chile-colegios-particulares)
+
+###### Beca Ejercito
+
+Beca que se otorga a los hijos de funcionarios del Ejército de Chile o del Hospital Militar de Santiago y consiste en una rebaja de un 50% en el costo anual del arancel de la carrera.
+
+[Más información ](/becas/beca-ejercito)
+
+###### Beca UANDES Económica
+
+Beca socioeconómica que cubre entre un 15% y un 70% de cobertura en el arancel y matrícula anual de la carrera, dependiendo de la situación económica del estudiante, que será evaluada por acreditación socioeconómica anualmente
+
+[Más información ](/becas/beca-uandes-economica)
+
+###### Beca Armada de Chile
+
+Beca para hijos de funcionarios en servicio activo o en retiro de la Armada de Chile, contratados por la ley 18.476 que hayan ingresado vía admisión centralizada. La beca será de carácter anual y consistirá en una rebaja de un 50% en el arancel.
+
+[Más información ](/becas/beca-armada-de-chile)
+
+### Testimonios
+
+# 
+
+###  Josefina Whittle
+
+### Alumna de Pedagogía Básica Bilingüe
+
+###  Bárbara Deramond
+
+### Alumna de Educación de Párvulos
+
+###  Ignacio Illanes
+
+### Exdecano Facultad de Educación
+
+  
+  
+
+
+### INTERCAMBIOS EDUCACIÓN DE PÁRVULOS CON MENCIONES
+
+La carrera de Educación de Párvulos cuenta con 28 convenios de intercambio semestrales en 11 países del mundo (Australia, Asia Pacífico, Bolivia, Canadá, Colombia, Estados Unidos, España, México, Perú, Reino Unido, Uruguay).
+
+  
+[Ver más ](https://airtable.com/shr8W7MhdOVMxuCdP/tblI7niyYqvBaMHs8)
+
+## salas de simulación
+
+### mantente al día  
+con tu carrera
+
+Déjanos tus datos para mantenerte informado sobre las novedades de la carrera de Educación de Párvulos, nuestros eventos, talleres prácticos y sobre todo lo que necesitas saber del proceso de Admisión 2026.
+
+[__Suscríbete](https://admision.uandes.cl/formularios/formulario-carreras)
+
+## Ver también
+
+[Pedagogía Básica Bilingue __](/carreras/area-educacion/pedagogia-basica-bilingue)
+
+[Pedagogía Básica __](/carreras/area-educacion/pedagogia-basica)
+
+[Educación de Párvulos __](/carreras/area-educacion/educacion-de-parvulos)
+
+La información proporcionada tiene relación a la Admisión 2026. La Universidad de los Andes se reserva el derecho de realizar cambios en esta página.
+
+#### mantente al día sobre admisión
+
+Ingresa tu E-Mail __
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+

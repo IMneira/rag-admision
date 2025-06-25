@@ -1,0 +1,177 @@
+# Clínica UANDES firma convenio con red de hospitales de Harvard
+
+**Source:** https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard
+**Scraped:** 2025-06-25 14:07:57
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Noticias ](/noticias) / Detalle Noticia
+
+# Clínica UANDES firma convenio con red de hospitales de Harvard
+
+12/03/2024
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2024/03/12/clínica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Share by Email") [](javascript:void\(0\);)
+
+**El objetivo principal es desarrollar la excelencia en medicina, que en su primera etapa tendrá un enfoque en el tratamiento del cáncer.**
+
+La [**Clínica de la Universidad de los Andes**](http://www.clinicauandes.cl/) firmó un acuerdo de colaboración con [**Mass General Brigham**](https://www.massgeneralbrigham.org/), un sistema integrado de salud con sede en Boston, EE. UU., que incluye cinco centros médicos académicos afiliados a la [**Facultad de Medicina de Harvard**](https://hms.harvard.edu/).
+
+La colaboración pretende establecer una relación estratégica de largo plazo con un sistema de salud líder a nivel mundial para el desarrollo de nuevas áreas, mejora y optimización de servicios, capacitación e innovación en la Clínica Universidad de los Andes, beneficiando así a todo el país.
+
+**“Como clínica universitaria, estamos comprometidos a brindar medicina de alta calidad, y nos dimos cuenta de que tener una relación regular con una institución de salud de clase mundial es un estímulo, un apoyo para lo que hemos estado haciendo durante los últimos 10 años. Esta relación les dará a nuestros pacientes la confianza de que lo que estamos haciendo en la Clínica está en línea con las mejores prácticas de salud en el mundo“,** explica [**Pablo Valdés, Director Médico de Clínica UANDES**](https://www.clinicauandes.cl/quienes-somos/gobierno-corporativo/equipo-medico).
+
+**“La misión compartida en innovación y excelencia en el cuidado de la salud une a Mass General Brigham y a Clínica de la Universidad de los Andes para esta significativa colaboración”, afirma Raymond Liu, MD, vicepresidente de asesoría global de Mass General Brigham. “Esto marca el comienzo de nuestro viaje juntos, un viaje para compartir el conocimiento clínico y las mejores prácticas, y para continuar avanzando en el mejor tratamiento para los pacientes de Clínica Universidad de los Andes y más allá“**.
+
+Esta es la primera colaboración de Mass General Brigham Global Advisory con un centro médico académico en América Latina.
+
+**¿Por qué Mass General Brigham?**
+
+[**Mass General Brigham**](https://www.massgeneralbrigham.org/) es una organización sin fines de lucro dedicada a la atención al paciente, la investigación, la enseñanza y el servicio comunitario. Es la empresa de investigación hospitalaria más grande de los EE. UU., con un presupuesto anual de investigación que supera los USD $2 mil millones.
+
+Su red incluye el**[Brigham and Women’s Hospital](https://www.brighamandwomens.org/)**, el [**Massachusetts General Hospital**](https://www.massgeneral.org/), así como hospitales comunitarios y especializados, un plan de seguro médico, redes de médicos, centros de salud comunitarios, atención domiciliaria y servicios de atención a largo plazo.
+
+A lo largo de esta colaboración, los expertos clínicos y de investigación del Hospital General de Massachusetts, miembro fundador de Mass General Brigham y el hospital universitario original y más grande de la Facultad de Medicina de Harvard, compartirán las mejores prácticas para apoyar a la Clínica en la transformación de la medicina, la mejora de la educación médica y la mejora de la calidad de la atención para sus pacientes.
+
+**Ventajas de esta colaboración para los pacientes de Clínica UANDES**
+
+El objetivo principal de esta colaboración es desarrollar aún más la excelencia en la medicina. La fase inicial comenzará con el trabajo con expertos en la materia del [Mass General Cancer Cente](https://www.massgeneral.org/cancer-center)r sobre el desarrollo y la educación de la línea de servicio del cáncer. 
+
+Mass General Cancer Center es uno de los centros oncológicos mejor clasificados en los EE. UU., conocido por:
+
+  * Ser considerado uno de los mejores de los Estados Unidos
+  * Ser uno de los únicos 53 centros reconocidos como Centro Oncológico Integral por el Instituto Nacional del Cáncer
+  * Contar con más de 500 especialistas dedicados al cáncer
+  * Operar más de 30 centros y programas multidisciplinarios de enfermedades oncológicas
+  * Promover la innovación y la investigación del cáncer, realizando cerca de 500 ensayos clínicos anualmente, lo que ha llevado a la aprobación de aproximadamente 25 medicamentos contra el cáncer en la última década
+
+
+
+**“Nuestros especialistas del Centro de Cáncer podrán tener contacto directo con expertos en el campo de la oncología en Mass General Brigham, lo que nos permitirá crear conexiones importantes en esta área que redundarán en una mejor atención al paciente“** , dice el [**Dr. Francisco López**](https://www.clinicauandes.cl/profesionales/perfil/dr-francisco-lopez-kostner), jefe del Centro de Cáncer de Clínica Universidad de los Andes.
+
+Por su parte, nuestros pacientes **“tendrán la garantía de que los estándares de seguridad y calidad se están alineando con los estándares internacionales, y pueden estar seguros de que los profesionales médicos y de enfermería tienen el conocimiento y las capacidades para brindarles la mejor atención“** , concluye el Dr. Pablo Valdés.
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](https://admision.uandes.cl/noticias/detalle-noticia/2024/03/12/cl%C3%ADnica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Clínica UANDES firma convenio con red de hospitales de Harvard") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2024/03/12/clínica-uandes-firma-convenio-con-red-de-hospitales-de-harvard "Share by Email") [](javascript:void\(0\);)
+
+### Otras noticias
+
+[ Seminario de Liderazgo con Propósito  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/06/04/seminario-de-liderazgo-con-propósito) [ Semana de bienestar UANDES  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/31/semana-de-bienestar-uandes) [ Novatos UANDES participaron en voluntariado en la comuna de Lo Barnechea  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/13/novatos-uandes-participaron-en-voluntariado-en-la-comuna-de-lo-barnechea) [ UANDES da la bienvenida a los novatos que inician etapa universitaria  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/11/uandes-da-la-bienvenida-a-los-novatos-que-inician-etapa-universitaria)
+
+### Relacionados
+
+[ **dic.  
+18** Conoce el testimonio de Catalina Galarce quien ingreso a Medicina por Beca Alumni ](/noticias/detalle-noticia/2023/12/18/conoce-el-ingreso-de-catalina-galarce-quien-ingreso-a-medicina-por-beca-alumni)
+
+[ **jun.  
+04** Inicia primer internado en dermatología de la Escuela de Medicina en la Clínica Universidad de los Andes ](/noticias/detalle-noticia/2021/06/04/inicia-primer-internado-en-dermatología-de-la-escuela-de-medicina-en-la-clínica-universidad-de-los-andes)
+
+[ **jun.  
+22** Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES ](/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-exámenes-preventivos-a-colaboradores-uandes)
+
+[ **mar.  
+30** Medicina incorpora ecógrafos de bolsillo para la formación de sus estudiantes ](/noticias/detalle-noticia/2022/03/30/medicina-uandes-incorpora-ecógrafos-de-bolsillo-para-la-formación-de-sus-estudiantes)
+
+[ **may.  
+24** Alumnos de Medicina realizan taller interactivo e intensivo de ultrasonido clínico ](/noticias/detalle-noticia/2022/05/24/alumnos-de-medicina-realizan-taller-interactivo-e-intensivo-de-ultrasonido-clínico)
+
+[ **may.  
+07** Más de 40 alumnos de Medicina realizaron internado voluntario en RedSalud ](/noticias/detalle-noticia/2021/05/07/más-de-40-alumnos-de-medicina-realizaron-internado-voluntario-en-redsalud)
+
+[ **abr.  
+21** “Quiero mis 15” el exitoso Club de Dibujo de Medicina ](/noticias/detalle-noticia/2021/04/21/quiero-mis-15-el-exitoso-club-de-dibujo-de-medicina)
+
+[ **nov.  
+08** Medicina, Odontología y Enfermería y Obstetricia desarrollan modelo de aprendizaje híbrido que incorpora la simulación virtual ](/noticias/detalle-noticia/2021/11/08/medicina-odontología-y-enfermería-y-obstetricia-desarrollan-modelo-de-aprendizaje-híbrido-que-incorpora-la-simulación-virtual)
+
+[ **mar.  
+07** Medicina es acreditada por un nuevo periodo de 6 años ](/noticias/detalle-noticia/2022/03/07/medicina-es-acreditada-por-un-nuevo-periodo-de-6-años)
+
+[ **ago.  
+06** Estudiantes de Medicina realizan internado voluntario en campos clínicos ](/noticias/detalle-noticia/2020/08/06/estudiantes-de-medicina-realizan-internado-voluntario-en-campos-clinicos)
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+

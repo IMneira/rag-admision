@@ -1,0 +1,236 @@
+# Ingeniería Civil Eléctrica
+
+**Source:** https://admision.uandes.cl/carreras/area-ingenieria-y-administracion/ingenieria-civil-electrica
+**Scraped:** 2025-06-25 13:52:05
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Carreras ](/carreras) [/ Área Ingeniería y Administración ](/carreras/area-ingenieria-y-administracion) / Ingeniería Civil Eléctrica
+
+[ ](/carreras)
+
+### Facultad de Ingeniería y Ciencias Aplicadas
+
+# Ingeniería Civil Eléctrica
+
+##### ¿Por qué en la UANDES?
+
+  * __Contacto temprano con la profesión mediante prácticas y proyectos.
+  * __Amplia gama de especialidades y menciones.
+  * __Formación analítica y sólidas bases de la Ingeniería.
+  * __Laboratorios con equipamiento de nivel internacional.
+  * __Fuerte orientación profesional, conectada con la sociedad.
+  * __Formación de habilidades de comunicación en español e inglés, dentro de los propios cursos de ingeniería.
+
+
+
+[ __](https://www.youtube.com/watch?v=dFS1elcqRj8&feature=youtu.be)
+
+#### Perfil del alumno
+
+Buscamos formar ingenieros de excelencia, capaces de liderar proyectos que ayuden en el desarrollo del país, por medio del conocimiento profundo de la ingeniería, la perseverancia y esfuerzo en su trabajo. Con capacidad de identificar problemas, y con curiosidad por aprender y adquirir conocimientos y herramientas para proveer mejores soluciones. Nuestros alumnos se identifican por su capacidad de inserción en diferentes entornos, por su orden y eficiencia, por su capacidad de comunicación, y por su multidisciplinariedad. Nuestro objetivo como facultad, es contribuir a la formación de profesionales que quieran colaborar y vincularse con la industria y sus necesidades. 
+
+[__Formulario de contacto](https://admision.uandes.cl/formularios/formulario-paginas-carreras)
+
+[ Malla __](https://admision.uandes.cl/docs/default-source/carreras/documentos-area-ingenieria-y-administracion/ingenieria-civil-electrica/malla_ingenieria_civil_electrica_2023.pdf)
+
+##### Título
+
+Ingeniero Civil Eléctrico
+
+##### Licenciatura
+
+Licenciado en Ciencias de la Ingeniería
+
+##### Duración
+
+11 semestres
+
+## Información para postular el 2025
+
+### PUNTAJES
+
+    * __**Puntaje de corte 2025**  
+802 puntos PAES
+    * __**Puntaje ponderado mínimo**  
+600 puntos
+    * __**Puntaje promedio mínimo de Competencia Lectora y Matemática**  
+500 puntos
+
+
+
+### PONDERACIONES 2022
+
+    * __**NEM**  
+10%
+    * __**Ranking**  
+25%
+    * __**Competencia Lectora**  
+10%
+    * __****Competencia** Matemática 1 (M1)**  
+40%
+    * __****Competencia** Matemática 2 (M2)**  
+5%
+    * __**Ciencias**  
+10%
+
+
+
+### VALORES Y ARANCELES
+
+    * __**Valor matrícula**  
+21 UF
+    * __**Arancel**  
+230 UF
+
+###### 
+
+
+
+
+### INTERCAMBIOS INGENIERÍA
+
+La Facultad de Ingeniería y Ciencias Aplicadas cuenta con 102 convenios de intercambios semestrales en 32 países (Alemania, Argentina, Asia Pacífico, Australia, Austria, Bélgica, Bolivia, Brasil, Canadá, Colombia, Corea, Costa Risa, Croacia, Ecuador, España, Estados Unidos, Filipinas, Francia, Guatemala, India, Italia, Kenia, México, Perú, Polonia, Portugal, Reino Unido, República Dominicana, Suecia, Suiza, Uruguay y Países Bajos).
+
+  
+[Ver más ](https://airtable.com/shr3Ej6ImYHWo9kin/tblI7niyYqvBaMHs8)
+
+## laboratorios Facultad de Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+Laboratorio Ingeniería
+
+### mantente al día  
+con tu carrera
+
+Déjanos tus datos para mantenerte informado sobre las novedades de la carrera de Ingeniería Civil, nuestros eventos, talleres prácticos y sobre todo lo que necesitas saber del proceso de Admisión 2026.
+
+[__Suscríbete](https://admision.uandes.cl/formularios/formulario-carreras)
+
+## Ver también
+
+[Bachillerato de Ingeniería Civil __](/carreras/programas-de-bachillerato/bachillerato-de-ingenieria-civil)
+
+[Administración de Servicios __](/carreras/area-ingenieria-y-administracion/administracion-de-servicios)
+
+[Ingeniería Comercial __](/carreras/area-ingenieria-y-administracion/ingenieria-comercial)
+
+[Ingeniería Civil en Obras Civil __](/carreras/area-ingenieria-y-administracion/ingenieria-civil-en-obras-civil)
+
+[Ingeniería Civil en Ciencias de la Computación __](/carreras/area-ingenieria-y-administracion/ingenieria-civil-en-ciencias-de-la-computacion)
+
+[Ingeniería Civil Ambiental __](/carreras/area-ingenieria-y-administracion/ingenieria-civil-ambiental)
+
+[Ingeniería Civil Eléctrica __](/carreras/area-ingenieria-y-administracion/ingenieria-civil-electrica)
+
+[Ingeniería Civil Industrial __](/carreras/area-ingenieria-y-administracion/ingenieria-civil-industrial)
+
+La información proporcionada tiene relación a la Admisión 2026. La Universidad de los Andes se reserva el derecho de realizar cambios en esta página.
+
+#### mantente al día sobre admisión
+
+Ingresa tu E-Mail __
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+

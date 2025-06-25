@@ -14,7 +14,10 @@ def create_app():
          supports_credentials=True)
     
     app.config.from_object(Config)
-    # flask_db.init_app(app)
+    flask_db.init_app(app)
+    
+    # Import models to register them with SQLAlchemy
+    from app.models import Conversation, Message
 
     from app.routes import blueprints
     for bp in blueprints:

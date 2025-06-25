@@ -1,0 +1,153 @@
+# Concurso literario premió a las mejores plumas de la Universidad de los Andes
+
+**Source:** https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premió-a-las-mejores-plumas-de-la-universidad-de-los-andes
+**Scraped:** 2025-06-25 14:04:07
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Noticias ](/noticias) / Detalle Noticia
+
+# Concurso literario premió a las mejores plumas de la Universidad de los Andes 
+
+21/08/2023
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2023/08/21/concurso-literario-premió-a-las-mejores-plumas-de-la-universidad-de-los-andes "Share by Email") [](javascript:void\(0\);)
+
+**En su decimoquinta versión, el Concurso de Cuentos incorporó una nueva categoría para los profesores y administrativos de la Universidad.**
+
+74 escritores de III° y IV° medio, estudiantes UANDES, alumni y trabajadores de la Universidad participaron de un nuevo certamen que busca incentivar la creatividad a través de una sana competencia literaria. Como es tradición, durante la premiación se dio lectura a las obras ganadoras de cada categoría y se reconoció a los tres primeros lugares de cada una. 
+
+El vicerrector de alumnos y alumni, Francisco Javier Lavín, destacó la importancia de este tipo de actividades que complementan la formación que la Universidad entrega a través de sus carreras. También resaltó la incorporación de nuevas categorías que han permitido que participen posibles futuros alumnos, alumni y ahora quienes trabajan en la Universidad.   
+  
+**Ganadores categoría Admisión:  
+**1er lugar: La abuelita de alambre, de Isidora Catalán  
+2do lugar: Diente de león, de María Selman   
+3er lugar Bailando a pulso, de Sofía Herrera 
+
+Cabe destacar que este año el jurado estuvo compuesto por: 
+
+  * Enrique Sologuren, presidente del jurado, profesor del Instituto de Literatura
+
+
+  * Paola Cabrera, bibliotecóloga referencista de la Dirección de Biblioteca 
+
+
+  * Sofía Maruri, coordinadora de fidelización de Dirección de Alumni 
+
+
+  * Elisa Joannon, secretaria general de la FEUANDES 
+
+
+  * Pablo Rolle, Primer lugar 2022 Vida Universitaria y alumno de Ingeniería Civil Ambiental 
+
+
+  * Noelle Thomas, psicóloga de Vida Universitaria 
+
+
+  * Marta Viviani. exdirectora de Extensión Cultural UANDES 
+
+
+  * Jacinta Díaz, coordinadora de comunicaciones Vida Universitaria y, 
+
+
+  * Leslie Armijo, asistente de producción y cultura, de Vida Universitaria 
+
+
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](https://admision.uandes.cl/noticias/detalle-noticia/2023/08/21/concurso-literario-premi%C3%B3-a-las-mejores-plumas-de-la-universidad-de-los-andes "Concurso literario premió a las mejores plumas de la Universidad de los Andes ") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2023/08/21/concurso-literario-premió-a-las-mejores-plumas-de-la-universidad-de-los-andes "Share by Email") [](javascript:void\(0\);)
+
+### Otras noticias
+
+[ Seminario de Liderazgo con Propósito  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/06/04/seminario-de-liderazgo-con-propósito) [ Semana de bienestar UANDES  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/31/semana-de-bienestar-uandes) [ Novatos UANDES participaron en voluntariado en la comuna de Lo Barnechea  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/13/novatos-uandes-participaron-en-voluntariado-en-la-comuna-de-lo-barnechea) [ UANDES da la bienvenida a los novatos que inician etapa universitaria  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/11/uandes-da-la-bienvenida-a-los-novatos-que-inician-etapa-universitaria)
+
+### Relacionados
+
+[ **nov.  
+08** Se realizó kick off de la quinta versión del concurso Challengers ](/noticias/detalle-noticia/2021/11/08/se-realizó-kick-off-de-la-quinta-versión-del-concurso-challengers)
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+

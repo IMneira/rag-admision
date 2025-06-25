@@ -1,0 +1,118 @@
+# Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España
+
+**Source:** https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a
+**Scraped:** 2025-06-25 14:10:52
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Noticias ](/noticias) / Detalle Noticia
+
+# Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España
+
+06/06/2022
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-económicas-y-empresariales-uandes-se-reúne-con-universidades-de-alemania-austria-y-españa "Share by Email") [](javascript:void\(0\);)
+
+**Decana Karin Jürgensen y vicedecano de alumnos Francisco Ulloa visitaron TUM (Alemania), WU (Austria) y Universidad de Navarra (España) para expandir sus fronteras en vinculación internacional.**
+
+Karin Jürgensen, decana de la [Facultad de Ciencias Económicas y Empresariales UANDES](https://www.uandes.cl/facultad/ciencias-economicas-y-empresariales/), junto al vicedecano de alumnos Francisco Ulloa, lideraron la delegación que visitó diversas casas de estudio europeas para expandir sus fronteras en cuanto a la vinculación internacional y en línea con la apertura de la nueva carrera International Business. Las autoridades de la [Facultad](https://www.uandes.cl/facultad/ciencias-economicas-y-empresariales/) se reunieron con diversos integrantes de la [Technische Universität München (TUM Alemania)](https://www.tum.de/en/) y la [Wirtschaftsuniversität Wien (WU Austria](https://www.wu.ac.at/en/)), para compartir experiencias y generar nuevas alianzas.
+
+En las reuniones en la [Universidad de Navarra (España)](https://www.unav.edu/), también asistieron Paulina Mahuzier, directora de estudios y Constanza Crestuzzo, directora de Teaching & Learning de la [Facultad](https://www.uandes.cl/facultad/ciencias-economicas-y-empresariales/), donde trabajaron en diversas áreas para para potenciar la formación integral de cada alumno.
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-econ%C3%B3micas-y-empresariales-uandes-se-re%C3%BAne-con-universidades-de-alemania-austria-y-espa%C3%B1a "Facultad de Ciencias Económicas y Empresariales UANDES se reúne con universidades de Alemania, Austria y España") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2022/06/06/facultad-de-ciencias-económicas-y-empresariales-uandes-se-reúne-con-universidades-de-alemania-austria-y-españa "Share by Email") [](javascript:void\(0\);)
+
+### Otras noticias
+
+[ Seminario de Liderazgo con Propósito  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/06/04/seminario-de-liderazgo-con-propósito) [ Semana de bienestar UANDES  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/31/semana-de-bienestar-uandes) [ Novatos UANDES participaron en voluntariado en la comuna de Lo Barnechea  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/13/novatos-uandes-participaron-en-voluntariado-en-la-comuna-de-lo-barnechea) [ UANDES da la bienvenida a los novatos que inician etapa universitaria  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/11/uandes-da-la-bienvenida-a-los-novatos-que-inician-etapa-universitaria)
+
+### Relacionados
+
+[ **may.  
+06** Alumno de Ingeniería Comercial UANDES crea página abierta a la comunidad con información económica ](/noticias/detalle-noticia/2020/05/06/alumno-de-ingeniería-comercial-uandes-crea-página-abierta-a-la-comunidad-con-información-económica)
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+

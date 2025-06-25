@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.rag.query_engine import query_rag
+from app.models import Conversation, Message
+from app.db import flask_db as db
 from datetime import datetime
 import json
 import os
@@ -10,9 +12,6 @@ from pypdf import PdfReader
 import io
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
-
-# In-memory storage for conversations (in production, use a database)
-conversations = {}
 
 # Upload configuration
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -126,9 +125,19 @@ def chat():
                 status_code=400
             )
         
-        # Generate conversation ID if not provided
-        if not conversation_id:
-            conversation_id = str(uuid.uuid4())
+        # Get or create conversation
+        if conversation_id:
+            conversation = Conversation.get_by_id(conversation_id)
+            if not conversation:
+                return format_response(
+                    success=False,
+                    error='Conversation not found',
+                    status_code=404
+                )
+        else:
+            # Create new conversation
+            conversation = Conversation.create_conversation()
+            conversation_id = conversation.id
         
         # Query RAG system
         response_text, sources = query_rag(question)
@@ -144,33 +153,24 @@ def chat():
             if url and url not in source_urls:
                 source_urls.append(url)
         
-        # Create message object
-        message = {
-            'id': str(uuid.uuid4()),
-            'question': question,
-            'response': str(response_text),
-            'sources': source_urls,
-            'timestamp': datetime.utcnow().isoformat() + 'Z'
-        }
-        
-        # Store in conversation history
-        if conversation_id not in conversations:
-            conversations[conversation_id] = {
-                'id': conversation_id,
-                'created_at': datetime.utcnow().isoformat() + 'Z',
-                'messages': []
-            }
-        conversations[conversation_id]['messages'].append(message)
+        # Create and save message to database
+        message = Message.create_message(
+            conversation_id=conversation_id,
+            question=question,
+            response=str(response_text),
+            sources=source_urls
+        )
         
         return format_response(
             success=True,
             data={
                 'conversation_id': conversation_id,
-                'message': message
+                'message': message.to_dict()
             }
         )
         
     except Exception as e:
+        db.session.rollback()
         return format_response(
             success=False,
             error=f'Internal server error: {str(e)}',
@@ -184,8 +184,9 @@ def get_conversations():
         conversation_id = request.args.get('id')
         
         if conversation_id:
-            # Get specific conversation
-            if conversation_id not in conversations:
+            # Get specific conversation with messages
+            conversation = Conversation.get_by_id(conversation_id)
+            if not conversation:
                 return format_response(
                     success=False,
                     error='Conversation not found',
@@ -193,18 +194,12 @@ def get_conversations():
                 )
             return format_response(
                 success=True,
-                data=conversations[conversation_id]
+                data=conversation.to_dict_with_messages()
             )
         else:
             # Get all conversations (metadata only)
-            conversations_list = []
-            for conv_id, conv_data in conversations.items():
-                conversations_list.append({
-                    'id': conv_id,
-                    'created_at': conv_data['created_at'],
-                    'message_count': len(conv_data['messages']),
-                    'last_message': conv_data['messages'][-1]['timestamp'] if conv_data['messages'] else None
-                })
+            conversations = Conversation.get_all()
+            conversations_list = [conv.to_dict() for conv in conversations]
             
             return format_response(
                 success=True,
@@ -222,14 +217,15 @@ def get_conversations():
 def delete_conversation(conversation_id):
     """Delete a specific conversation"""
     try:
-        if conversation_id not in conversations:
+        conversation = Conversation.get_by_id(conversation_id)
+        if not conversation:
             return format_response(
                 success=False,
                 error='Conversation not found',
                 status_code=404
             )
         
-        del conversations[conversation_id]
+        conversation.delete()
         
         return format_response(
             success=True,
@@ -237,6 +233,7 @@ def delete_conversation(conversation_id):
         )
         
     except Exception as e:
+        db.session.rollback()
         return format_response(
             success=False,
             error=f'Internal server error: {str(e)}',

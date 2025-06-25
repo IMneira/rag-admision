@@ -1,0 +1,115 @@
+# Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile
+
+**Source:** https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile
+**Scraped:** 2025-06-25 14:07:26
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Noticias ](/noticias) / Detalle Noticia
+
+# Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile
+
+14/12/2020
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Share by Email") [](javascript:void\(0\);)
+
+**Bernardita Vargas, alumna de tercer año de Pedagogía Básica UANDES, apoya académicamente a un estudiante de segundo básico del colegio Ayelén de Rancagua, en la asignatura de matemáticas.**
+
+Bernardita Vargas, alumna de tercer año de **[Pedagogía Básica UANDES](https://www.uandes.cl/carrera/escuela-de-pedagogia-basica/)** , participa en el voluntariado educativo **Tutores para Chile** , donde futuros profesores de educación básica apoyan académicamente a estudiantes de primero a sexto básico del colegio Ayelén de Rancagua, con el fin de **ayudarlos en las asignaturas de matemáticas y lenguaje**.
+
+“En los años anteriores teníamos pasantías todos los semestres, donde estábamos en colegios, interactuando con los estudiantes, enseñando y fortaleciendo la práctica para un futuro, sin embargo, este 2020 hemos perdido esa oportunidad por la **pandemia** causada por el **Covid-19**. Participar en este voluntariado me ha ayudado a no perder el hilo, aunque sea a través de una pantalla, lo que lo hace más desafiante y más enriquecedor al mismo tiempo. Además, dado los tiempos difíciles que estamos viviendo a nivel mundial, esta**es una manera de aportar al resto** y no quedarme todo el tiempo encerrada en una burbuja, preocupándome solo de las notas y mis estudios, sino también ayudando a los demás”, comenta la alumna de tercer año de **[Pedagogía Básica UANDES](https://www.uandes.cl/carrera/escuela-de-pedagogia-basica/),** que apoya académicamente a Tomás Amigo, estudiante de segundo básico del colegio Ayelén de Rancagua, en la asignatura de matemáticas.
+
+“Esta experiencia ha sido desafiante, ya que hacer una clase virtual puede llegar a ser difícil y complicado, especialmente mantener la atención del alumno todo el tiempo. Por otro lado, **es una oportunidad enriquecedora, que he disfrutado al máximo y me alegra saber que estoy haciendo un cambio en la educación de una persona** , y a la vez, que he aprendido mucho de mi alumno”, concluye.
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](https://admision.uandes.cl/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Alumna de Pedagogía Básica participa en voluntariado educativo Tutores para Chile") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2020/12/14/alumna-de-pedagogia-basica-participa-en-voluntariado-educativo-tutores-para-chile "Share by Email") [](javascript:void\(0\);)
+
+### Otras noticias
+
+[ Seminario de Liderazgo con Propósito  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/06/04/seminario-de-liderazgo-con-propósito) [ Semana de bienestar UANDES  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/31/semana-de-bienestar-uandes) [ Novatos UANDES participaron en voluntariado en la comuna de Lo Barnechea  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/13/novatos-uandes-participaron-en-voluntariado-en-la-comuna-de-lo-barnechea) [ UANDES da la bienvenida a los novatos que inician etapa universitaria  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/11/uandes-da-la-bienvenida-a-los-novatos-que-inician-etapa-universitaria)
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+

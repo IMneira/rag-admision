@@ -115,7 +115,7 @@ def main():
         logging.error(f"Critical error in main process: {e}")
         raise
 
-def load_documents(file_types: list[str] = [".txt"]) -> list[Document]:
+def load_documents(file_types: list[str] = [".md"]) -> list[Document]:
     documents = []
     failed_files = []
 
@@ -145,6 +145,20 @@ def load_documents(file_types: list[str] = [".txt"]) -> list[Document]:
             failed_files.append("TXT directory")
     else:
         print("Skipping .txt in documents")
+    
+    if ".md" in file_types:
+        print("Including .md (Markdown) in documents.")
+        try:
+            md_loader = DirectoryLoader(DATA_PATH, glob="**/*.md",
+                                        loader_cls=TextLoader)
+            md_docs = md_loader.load()
+            documents.extend(md_docs)
+            logging.info(f"Successfully loaded {len(md_docs)} Markdown documents")
+        except Exception as e:
+            logging.error(f"Failed to load Markdown documents: {e}")
+            failed_files.append("Markdown directory")
+    else:
+        print("Skipping .md in documents")
 
     if failed_files:
         logging.warning(f"Failed to load documents from: {failed_files}")

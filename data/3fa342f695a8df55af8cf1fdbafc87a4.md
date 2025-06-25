@@ -1,0 +1,141 @@
+# Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES
+
+**Source:** https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-exámenes-preventivos-a-colaboradores-uandes
+**Scraped:** 2025-06-25 14:05:51
+
+---
+
+[ ](/)
+
+Extranjeros 
+
+Volver
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+
+
+
+  * [Alumnos](https://www.uandes.cl/alumnos/)
+  * [Alumni](https://alumni.uandes.cl/?utm_source=sitio_uandes&utm_medium=header)
+  * [Académicos](https://www.uandes.cl/academicos/)
+  * [Internacional](https://www.uandes.cl/rrii/)
+  * [Vinculación con el Medio](https://www.uandes.cl/nosotros/informacion-institucional/vinculacion-con-el-medio/)
+  * [Biblioteca](https://www.uandes.cl/biblioteca/)
+  * [Clínica UANDES](https://www.clinicauandes.cl/?utm_source=home&utm_medium=menu&utm_campaign=clinica&utm_id=clinica)
+  * [ESE Business School](https://www.ese.cl/?utm_source=home&utm_medium=menu&utm_campaign=ese&utm_id=ese)
+
+
+
+Menú [ ](/) [ ](/) [ ](/)
+
+  * [Vinculación Escolar](https://vinculacionescolar.cl/)
+  * [Extranjeros](https://admision.uandes.cl/estudiantes-de-region-y-del-extranjero)
+  * BUSCAR
+
+
+  * [Sello UANDES](/sello-uandes)
+  * [Admisión](/admision)
+  * [Carreras](/carreras)
+  * [Becas](/becas)
+  * [Visitas](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
+
+×
+
+### Lo más buscado
+
+  * [Calendario Académico](https://www.uandes.cl/alumnos/informacion-academica/calendario-academico/)
+  * [Preguntas Frecuentes](https://www.uandes.cl/preguntas-frecuentes/)
+  * [Admisión](http://admision.uandes.cl/)
+  * [Carreras](https://www.uandes.cl/carreras/)
+  * [Vida Universitaria](https://www.uandes.cl/alumnos/vida-universitaria/)
+
+
+
+[/ Home ](/) [/ Noticias ](/noticias) / Detalle Noticia
+
+# Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES
+
+22/06/2022
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-exámenes-preventivos-a-colaboradores-uandes "Share by Email") [](javascript:void\(0\);)
+
+****
+
+Los alumnos de la Escuela de primer año, de la asignatura Atención al Enfermo, realizaron un operativo EMPA (examen médico preventivo del adulto) a los funcionarios y alumnos de la universidad, con el fin de prevenir enfermedades cardiovasculares muy prevalentes en nuestra población, tales como; diabetes, obesidad, hipertensión, entre otras.
+
+Los alumnos en conjunto con las docentes y ayudantes de la asignatura realizaron consejerías en estilos de vida saludables para que nuestra comunidad universitaria con un enfoque preventivo-promocional en salud.
+
+“Esta actividad además tiene fines pedagógicos muy importantes ya que acerca a los alumnos de medicina desde el primer semestre al contacto con personas desde un área más clínica, realizando entrevistas y procedimientos básicos que son una ayuda tangible para quienes se atendieron en este operativo y así nos cuidarnos entre todos”, comenta María Jesús Pacheco, académica de la Escuela de Medicina.
+
+[](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](https://admision.uandes.cl/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-ex%C3%A1menes-preventivos-a-colaboradores-uandes "Estudiantes de Medicina realizan exámenes preventivos a colaboradores UANDES") [](mailto:?subject=Mira esta noticia de Admisión UANDES&body=Pega esta url en tu navegador http://admisionuandes.lfi.cl/plantillas/noticias/detalle-noticia/2022/06/22/estudiantes-de-medicina-realizan-exámenes-preventivos-a-colaboradores-uandes "Share by Email") [](javascript:void\(0\);)
+
+### Otras noticias
+
+[ Seminario de Liderazgo con Propósito  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/06/04/seminario-de-liderazgo-con-propósito) [ Semana de bienestar UANDES  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/31/semana-de-bienestar-uandes) [ Novatos UANDES participaron en voluntariado en la comuna de Lo Barnechea  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/13/novatos-uandes-participaron-en-voluntariado-en-la-comuna-de-lo-barnechea) [ UANDES da la bienvenida a los novatos que inician etapa universitaria  ](https://admision.uandes.cl/noticias/detalle-noticia/2025/03/11/uandes-da-la-bienvenida-a-los-novatos-que-inician-etapa-universitaria)
+
+### Relacionados
+
+[ **may.  
+24** Alumnos de Medicina realizan taller interactivo e intensivo de ultrasonido clínico ](/noticias/detalle-noticia/2022/05/24/alumnos-de-medicina-realizan-taller-interactivo-e-intensivo-de-ultrasonido-clínico)
+
+[ **mar.  
+30** Medicina incorpora ecógrafos de bolsillo para la formación de sus estudiantes ](/noticias/detalle-noticia/2022/03/30/medicina-uandes-incorpora-ecógrafos-de-bolsillo-para-la-formación-de-sus-estudiantes)
+
+[ **mar.  
+07** Medicina es acreditada por un nuevo periodo de 6 años ](/noticias/detalle-noticia/2022/03/07/medicina-es-acreditada-por-un-nuevo-periodo-de-6-años)
+
+[ **nov.  
+08** Medicina, Odontología y Enfermería y Obstetricia desarrollan modelo de aprendizaje híbrido que incorpora la simulación virtual ](/noticias/detalle-noticia/2021/11/08/medicina-odontología-y-enfermería-y-obstetricia-desarrollan-modelo-de-aprendizaje-híbrido-que-incorpora-la-simulación-virtual)
+
+[ **jun.  
+04** Inicia primer internado en dermatología de la Escuela de Medicina en la Clínica Universidad de los Andes ](/noticias/detalle-noticia/2021/06/04/inicia-primer-internado-en-dermatología-de-la-escuela-de-medicina-en-la-clínica-universidad-de-los-andes)
+
+[ **may.  
+07** Más de 40 alumnos de Medicina realizaron internado voluntario en RedSalud ](/noticias/detalle-noticia/2021/05/07/más-de-40-alumnos-de-medicina-realizaron-internado-voluntario-en-redsalud)
+
+[ **abr.  
+21** “Quiero mis 15” el exitoso Club de Dibujo de Medicina ](/noticias/detalle-noticia/2021/04/21/quiero-mis-15-el-exitoso-club-de-dibujo-de-medicina)
+
+[ **ago.  
+06** Estudiantes de Medicina realizan internado voluntario en campos clínicos ](/noticias/detalle-noticia/2020/08/06/estudiantes-de-medicina-realizan-internado-voluntario-en-campos-clinicos)
+
+### Contáctanos
+
+[admisionpregrado@uandes.cl](mailto:admisionpregrado@uandes.cl)
+
+(+562) 26181000
+
+Monseñor Álvaro del Portillo 12.455  
+Las Condes, Santiago, Chile
+
+[ __](https://www.instagram.com/admisionuandes/) [ __](https://www.youtube.com/c/AdmisiónUniversidaddelosAndes) [ __](https://n9.cl/2vwsn) [ __](https://api.whatsapp.com/send?phone=56961408828)
+
+  * [Puntajes de corte](/puntajes-de-corte)
+  * [Ponderaciones](/ponderaciones)
+  * [Admisión Directa](/admision/admision-directa)
+  * [Admisión PAES](/admision/admision-centralizada)
+
+
+
+  * [Campus](/campus)
+  * [Eventos](/eventos-y-actividades)
+  * [Noticias](/noticias)
+
+
