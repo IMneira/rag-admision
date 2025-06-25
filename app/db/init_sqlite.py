@@ -13,7 +13,7 @@ sys.path.insert(0, project_root)
 
 from app import create_app
 from app.db import flask_db as db
-from app.models import Conversation, Message
+from app.models import Conversation, Message, User, create_admin_user
 from config import Config
 
 
@@ -53,6 +53,24 @@ def init_database():
             
             print(f"\n🎉 Database initialization complete!")
             print(f"📊 Database ready for storing conversations and messages")
+            
+            # Create admin user
+            try:
+                print("\n👤 Creating admin user...")
+                admin_user = create_admin_user(
+                    username=Config.ADMIN_USERNAME,
+                    email=Config.ADMIN_EMAIL,
+                    password=Config.ADMIN_PASSWORD
+                )
+                print(f"✅ Admin user '{admin_user.username}' created successfully")
+                
+                if Config.ADMIN_PASSWORD == "admin123":
+                    print("⚠️  WARNING: Using default admin password. Please change it after first login.")
+                    
+            except Exception as e:
+                print(f"⚠️  Admin user creation failed: {e}")
+                print("   You can create the admin user manually later using:")
+                print("   python app/db/create_admin.py create")
             
             return True
             

@@ -1,7 +1,9 @@
 from flask import Blueprint, request, jsonify
+from flask_login import current_user
 from app.services.rag.query_engine import query_rag
 from app.models import Conversation, Message
 from app.db import flask_db as db
+from app.auth.decorators import login_required, admin_required
 from datetime import datetime
 import json
 import os
@@ -103,6 +105,7 @@ def health_check():
     )
 
 @api_bp.route('/chat', methods=['POST'])
+@login_required
 def chat():
     """Main chat endpoint for RAG queries"""
     try:
@@ -127,16 +130,17 @@ def chat():
         
         # Get or create conversation
         if conversation_id:
-            conversation = Conversation.get_by_id(conversation_id)
+            # Check if user owns this conversation
+            conversation = Conversation.get_by_id_and_user(conversation_id, current_user.id)
             if not conversation:
                 return format_response(
                     success=False,
-                    error='Conversation not found',
+                    error='Conversation not found or access denied',
                     status_code=404
                 )
         else:
-            # Create new conversation
-            conversation = Conversation.create_conversation()
+            # Create new conversation for current user
+            conversation = Conversation.create_conversation(user_id=current_user.id)
             conversation_id = conversation.id
         
         # Query RAG system
@@ -178,18 +182,19 @@ def chat():
         )
 
 @api_bp.route('/conversations', methods=['GET'])
+@login_required
 def get_conversations():
     """Get all conversations or a specific conversation"""
     try:
         conversation_id = request.args.get('id')
         
         if conversation_id:
-            # Get specific conversation with messages
-            conversation = Conversation.get_by_id(conversation_id)
+            # Get specific conversation with messages (user-scoped)
+            conversation = Conversation.get_by_id_and_user(conversation_id, current_user.id)
             if not conversation:
                 return format_response(
                     success=False,
-                    error='Conversation not found',
+                    error='Conversation not found or access denied',
                     status_code=404
                 )
             return format_response(
@@ -197,8 +202,8 @@ def get_conversations():
                 data=conversation.to_dict_with_messages()
             )
         else:
-            # Get all conversations (metadata only)
-            conversations = Conversation.get_all()
+            # Get all conversations for current user (metadata only)
+            conversations = Conversation.get_by_user(current_user.id)
             conversations_list = [conv.to_dict() for conv in conversations]
             
             return format_response(
@@ -214,14 +219,15 @@ def get_conversations():
         )
 
 @api_bp.route('/conversations/<conversation_id>', methods=['DELETE'])
+@login_required
 def delete_conversation(conversation_id):
     """Delete a specific conversation"""
     try:
-        conversation = Conversation.get_by_id(conversation_id)
+        conversation = Conversation.get_by_id_and_user(conversation_id, current_user.id)
         if not conversation:
             return format_response(
                 success=False,
-                error='Conversation not found',
+                error='Conversation not found or access denied',
                 status_code=404
             )
         
@@ -241,6 +247,7 @@ def delete_conversation(conversation_id):
         )
 
 @api_bp.route('/upload/pdf', methods=['POST'])
+@admin_required
 def upload_pdf():
     """Upload PDF file and extract text to data directory"""
     try:

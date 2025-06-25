@@ -16,7 +16,18 @@ class Config:
         DB_HOST = SQLALCHEMY_DATABASE_URI.split("//")[-1].split("@")[1].split("/")[0]
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.urandom(24)
+    
+    # Authentication configuration
+    SECRET_KEY = os.getenv("SECRET_KEY", os.urandom(24))
+    REMEMBER_COOKIE_DURATION = int(os.getenv("REMEMBER_COOKIE_DURATION", "2592000"))  # 30 days
+    SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", "False").lower() in ("true", "1", "t")
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    
+    # Admin user configuration
+    ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
+    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@localhost")
+    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")  # Should be changed in production
 
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
