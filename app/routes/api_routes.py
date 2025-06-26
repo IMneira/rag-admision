@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user
-from app.services.rag.query_engine import query_rag
+from app.services.rag.enhanced_query_engine import EnhancedQueryEngine
 from app.models import Conversation, Message
 from app.db import flask_db as db
 from app.auth.decorators import login_required, admin_required
@@ -14,6 +14,9 @@ from pypdf import PdfReader
 import io
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
+
+# Initialize Enhanced RAG Query Engine
+enhanced_rag = EnhancedQueryEngine()
 
 # Upload configuration
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -143,11 +146,17 @@ def chat():
             conversation = Conversation.create_conversation(user_id=current_user.id)
             conversation_id = conversation.id
         
-        # Query RAG system
-        response_text, sources = query_rag(question)
+        # Query Enhanced RAG system
+        rag_response = enhanced_rag.query(question, enable_confidence_scoring=True)
         
-        # Extract document hashes from file paths
-        doc_hashes = [path.split('/')[1].split('.')[0] for path in sources]
+        # Extract document hashes from source IDs and map to URLs
+        doc_hashes = []
+        for source_id in rag_response.sources:
+            if '/' in source_id:
+                hash_id = source_id.split('/')[1].split('.')[0]
+            else:
+                hash_id = source_id.split(':')[0] if ':' in source_id else source_id
+            doc_hashes.append(hash_id)
         
         # Load URL index and map hashes to URLs
         url_index = load_url_index()
@@ -161,16 +170,35 @@ def chat():
         message = Message.create_message(
             conversation_id=conversation_id,
             question=question,
-            response=str(response_text),
+            response=str(rag_response.answer),
             sources=source_urls
         )
         
+        # Prepare enhanced response data
+        response_data = {
+            'conversation_id': conversation_id,
+            'message': message.to_dict(),
+            'enhanced_info': {
+                'query_type': rag_response.query_analysis.get('query_type', 'general'),
+                'complexity_score': rag_response.query_analysis.get('complexity_score', 0.5),
+                'processing_time': round(rag_response.processing_time, 3),
+                'context_summary': rag_response.context_summary,
+                'recommendations': rag_response.recommendations
+            }
+        }
+        
+        # Add confidence information if available
+        if rag_response.confidence:
+            response_data['enhanced_info']['confidence'] = {
+                'level': rag_response.confidence.level.value,
+                'score': round(rag_response.confidence.overall_score, 3),
+                'explanation': rag_response.confidence.explanation,
+                'recommendations': rag_response.confidence.recommendations
+            }
+        
         return format_response(
             success=True,
-            data={
-                'conversation_id': conversation_id,
-                'message': message.to_dict()
-            }
+            data=response_data
         )
         
     except Exception as e:
@@ -396,15 +424,75 @@ def api_info():
             'path': '/api/info',
             'method': 'GET',
             'description': 'Get API information'
+        },
+        {
+            'path': '/api/rag/stats',
+            'method': 'GET',
+            'description': 'Get RAG system performance statistics (admin only)'
+        },
+        {
+            'path': '/api/rag/reset-stats',
+            'method': 'POST',
+            'description': 'Reset RAG system statistics (admin only)'
         }
     ]
     
     return format_response(
         success=True,
         data={
-            'name': 'RAG Admission API',
-            'version': '1.0.0',
-            'description': 'API for university admission RAG chatbot',
-            'endpoints': endpoints
+            'name': 'Enhanced RAG Admission API',
+            'version': '2.0.0',
+            'description': 'Advanced API for university admission RAG chatbot with enhanced features',
+            'endpoints': endpoints,
+            'new_features': [
+                'Query enhancement and rewriting',
+                'Dynamic prompting based on query types',
+                'Context optimization and compression',
+                'Confidence scoring for answers',
+                'Performance monitoring and analytics'
+            ]
         }
     )
+
+
+@api_bp.route('/rag/stats', methods=['GET'])
+@admin_required
+def get_rag_statistics():
+    """Get RAG system performance statistics (admin only)"""
+    try:
+        stats = enhanced_rag.get_statistics()
+        
+        return format_response(
+            success=True,
+            data={
+                'rag_statistics': stats,
+                'description': 'Enhanced RAG system performance metrics'
+            }
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to get RAG statistics: {str(e)}',
+            status_code=500
+        )
+
+
+@api_bp.route('/rag/reset-stats', methods=['POST'])
+@admin_required
+def reset_rag_statistics():
+    """Reset RAG system statistics (admin only)"""
+    try:
+        enhanced_rag.reset_statistics()
+        
+        return format_response(
+            success=True,
+            data={'message': 'RAG statistics reset successfully'}
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to reset RAG statistics: {str(e)}',
+            status_code=500
+        )

@@ -14,7 +14,8 @@ API_KEY = Config.API_KEY
 CHROMA_PATH = "chroma"
 
 PROMPT_TEMPLATE = """
-Responde la siguiente pregunta basándote solamente en el contexto que se te proporciona a continuación. Si no encuentras información relevante, responde con "No puedo responder a esa pregunta".:
+Responde la siguiente pregunta basándote solamente en el contexto que se te proporciona a continuación. 
+Si no encuentras información relevante, responde con "No puedo responder a esa pregunta".:
 
 {context}
 
