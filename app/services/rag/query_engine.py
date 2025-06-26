@@ -29,7 +29,7 @@ def _neighbor_ids(chunk_id: str) -> list[str]:
     *base, idx = chunk_id.split(":")
     base = ":".join(base)
     i = int(idx)
-    return [f"{base}:{i-2}", f"{base}:{i+2}"]
+    return [f"{base}:{i-1}", f"{base}:{i+1}"]
 
 def _collapse_headers(docs: list[Document]) -> str:
     seen_header = set()
@@ -58,14 +58,14 @@ def main() -> None:
     query_rag(query_text)
 
 
-def query_rag(query_text: str) -> str:
+def query_rag(query_text: str) -> tuple[str, list[str]]:
     embedding_function = get_embedding()
     db = Chroma(
         persist_directory=CHROMA_PATH,
         embedding_function=embedding_function
     )
 
-    core_hits = db.similarity_search_with_score(query_text, k=4)
+    core_hits = db.similarity_search_with_score(query_text, k=6)
 
     extra_ids = []
     for doc, _ in core_hits:
