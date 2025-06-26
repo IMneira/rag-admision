@@ -127,7 +127,7 @@ Responde solo con las 2 reformulaciones, una por línea, sin numeración ni expl
 """
         
         try:
-            response = self.llm.invoke(prompt)
+            response = self.llm.complete(prompt)
             if hasattr(response, "content"):
                 response_text = response.content
             else:

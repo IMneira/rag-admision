@@ -170,12 +170,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--reset", action="store_true", help="Reset the database.")
     parser.add_argument("--drive", action="store_true", help="Ingest documents from Google Drive folder.")
+    parser.add_argument("--sync-bm25", action="store_true", help="Sync BM25 index with documents already in Chroma DB.")
     args = parser.parse_args()
 
     try:
         if args.reset:
             print("✨ Clearing Database")
             clear_database()
+        
+        # Handle BM25 sync operation
+        if args.sync_bm25:
+            print("🔄 Syncing BM25 index with existing Chroma documents")
+            sync_bm25_index()
+            return
 
         # Step 1: Load all documents
         if args.drive:
@@ -472,6 +479,96 @@ def build_bm25_index_incremental(new_chunks: list[Document]) -> None:
     except Exception as e:
         logging.error(f"Failed to update BM25 index: {e}")
         print(f"❌ Failed to update BM25 index: {e}")
+
+
+def sync_bm25_index() -> None:
+    """Sync BM25 index with documents that exist in Chroma DB but are not BM25 indexed"""
+    try:
+        print("🔍 Checking for documents in Chroma DB that need BM25 indexing...")
+        
+        # Connect to Chroma DB
+        db = Chroma(
+            persist_directory=CHROMA_PATH,
+            embedding_function=get_embedding()
+        )
+        
+        # Get all document IDs from Chroma
+        all_chroma_items = db.get(include=["documents", "metadatas"])
+        
+        if not all_chroma_items.get("ids"):
+            print("❌ No documents found in Chroma DB. Nothing to sync.")
+            return
+            
+        chroma_doc_ids = set(all_chroma_items["ids"])
+        print(f"📊 Found {len(chroma_doc_ids)} documents in Chroma DB")
+        
+        # Initialize BM25 searcher and check existing index
+        bm25_searcher = BM25KeywordSearcher(BM25_PATH)
+        index_file = os.path.join(BM25_PATH, "bm25_index.pkl")
+        metadata_file = os.path.join(BM25_PATH, "metadata.pkl")
+        
+        # Get existing BM25 document IDs
+        bm25_doc_ids = set()
+        if os.path.exists(index_file) and os.path.exists(metadata_file):
+            try:
+                bm25_searcher._load_index()
+                bm25_doc_ids = set(bm25_searcher.doc_id_to_index.keys())
+                print(f"📊 Found {len(bm25_doc_ids)} documents in BM25 index")
+            except Exception as e:
+                logging.warning(f"Failed to load existing BM25 index: {e}")
+                print("⚠️  Could not load existing BM25 index, will rebuild from scratch")
+        else:
+            print("📝 No existing BM25 index found")
+        
+        # Find missing documents (in Chroma but not in BM25)
+        missing_doc_ids = chroma_doc_ids - bm25_doc_ids
+        
+        if not missing_doc_ids:
+            print("✅ All Chroma documents are already BM25 indexed. Nothing to sync!")
+            return
+            
+        print(f"🔄 Found {len(missing_doc_ids)} documents that need BM25 indexing")
+        
+        # Retrieve missing documents from Chroma
+        missing_documents = []
+        for doc_id in tqdm.tqdm(missing_doc_ids, desc="Retrieving missing documents"):
+            try:
+                # Find the document in the full list
+                doc_index = all_chroma_items["ids"].index(doc_id)
+                content = all_chroma_items["documents"][doc_index]
+                metadata = all_chroma_items["metadatas"][doc_index] if all_chroma_items.get("metadatas") else {}
+                
+                # Create Document object
+                doc = Document(page_content=content, metadata=metadata)
+                missing_documents.append(doc)
+                
+            except (ValueError, IndexError) as e:
+                logging.warning(f"Failed to retrieve document {doc_id}: {e}")
+                continue
+        
+        if not missing_documents:
+            print("❌ Failed to retrieve any missing documents")
+            return
+            
+        print(f"📄 Successfully retrieved {len(missing_documents)} missing documents")
+        
+        # Add missing documents to BM25 index
+        print("🔨 Adding missing documents to BM25 index...")
+        
+        if bm25_doc_ids:
+            # Existing index found, use incremental update
+            bm25_searcher.add_documents(missing_documents)
+        else:
+            # No existing index, build from scratch with missing documents
+            bm25_searcher.build_index(missing_documents, force_rebuild=True)
+            
+        print(f"✅ Successfully synced BM25 index with {len(missing_documents)} documents")
+        print(f"📊 BM25 index now contains {len(bm25_searcher.documents)} total documents")
+        
+    except Exception as e:
+        logging.error(f"Failed to sync BM25 index: {e}")
+        print(f"❌ BM25 sync failed: {e}")
+        raise
 
 
 def clear_database() -> None:

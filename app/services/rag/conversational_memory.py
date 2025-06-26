@@ -98,7 +98,7 @@ RESUMEN ACTUALIZADO:
 """
         
         try:
-            response = self.llm.invoke(prompt)
+            response = self.llm.complete(prompt)
             summary = response.content if hasattr(response, 'content') else str(response)
             return summary.strip()
         except Exception as e:

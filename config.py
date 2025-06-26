@@ -30,6 +30,10 @@ class Config:
     ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")  # Should be changed in production
 
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
+    
+    # Query logging configuration
+    QUERY_DEBUG_LOGGING = os.getenv("QUERY_DEBUG_LOGGING", str(DEBUG)).lower() in ("true", "1", "t")
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO" if not DEBUG else "DEBUG")
 
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") else ["*"]
 

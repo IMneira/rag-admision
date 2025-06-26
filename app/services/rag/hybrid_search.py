@@ -113,6 +113,28 @@ class BM25KeywordSearcher:
         self.document_tokens = []
         self.doc_id_to_index = {}
         
+        # Attempt to load existing index during initialization
+        self._try_load_existing_index()
+        
+    def _try_load_existing_index(self):
+        """Try to load existing BM25 index during initialization"""
+        index_file = os.path.join(self.index_path, "bm25_index.pkl")
+        metadata_file = os.path.join(self.index_path, "metadata.pkl")
+        
+        if os.path.exists(index_file) and os.path.exists(metadata_file):
+            try:
+                self._load_index()
+                logging.info(f"Loaded existing BM25 index with {len(self.documents)} documents from {self.index_path}")
+            except Exception as e:
+                logging.warning(f"Failed to load existing BM25 index from {self.index_path}: {e}")
+                # Reset state on failed load
+                self.bm25_index = None
+                self.documents = []
+                self.document_tokens = []
+                self.doc_id_to_index = {}
+        else:
+            logging.debug(f"No existing BM25 index found at {self.index_path}")
+
     def build_index(self, documents: List[Document], force_rebuild: bool = False):
         """Build BM25 index from documents"""
         index_file = os.path.join(self.index_path, "bm25_index.pkl")
@@ -168,7 +190,7 @@ class BM25KeywordSearcher:
     def search(self, query: str, k: int = 10) -> List[SearchResult]:
         """Search using BM25"""
         if not self.bm25_index:
-            logging.warning("BM25 index not available")
+            logging.warning(f"BM25 index not available at {self.index_path}. Run populate script with --sync-bm25 to build the index.")
             return []
         
         try:

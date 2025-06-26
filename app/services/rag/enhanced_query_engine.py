@@ -18,6 +18,7 @@ from app.services.rag.dynamic_prompting import DynamicPromptGenerator, PromptStr
 from app.services.rag.confidence_scorer import ConfidenceScorer, ConfidenceScore
 from app.services.rag.hybrid_search import HybridSearcher
 from app.services.rag.conversational_memory import MemoryManager, ConversationContext
+from app.services.rag.query_logger import get_query_logger
 from config import Config
 
 
@@ -74,6 +75,14 @@ class EnhancedQueryEngine:
         """
         start_time = time.time()
         
+        # Initialize comprehensive logging
+        logger = get_query_logger()
+        query_id = logger.start_query(
+            query_text, 
+            "enhanced_rag", 
+            user_id=conversation_id
+        )
+        
         try:
             # Step 1: Load Conversation Context
             conversation_context = None
@@ -100,21 +109,74 @@ class EnhancedQueryEngine:
             query_analysis = self.query_enhancer.enhance_query(enhanced_query_text)
             
             # Step 3: Hybrid Multi-Query Retrieval
+            retrieval_start = time.time()
             retrieved_docs, similarity_scores = self._hybrid_multi_query_retrieval(query_analysis)
+            retrieval_time = time.time() - retrieval_start
+            
+            # Log retrieval phase
+            logger.log_retrieval(
+                query_id,
+                "hybrid_multi_query",
+                len(retrieved_docs),
+                {
+                    "query_type": query_analysis.get('query_type', 'unknown'),
+                    "enhanced_queries": len(query_analysis.get('enhanced_queries', [])),
+                    "retrieval_time": retrieval_time,
+                    "avg_similarity": sum(similarity_scores) / len(similarity_scores) if similarity_scores else 0
+                }
+            )
             
             # Step 4: Context Optimization
+            optimization_start = time.time()
             optimized_context = self._optimize_context(
                 retrieved_docs, query_text, query_analysis['query_type'], max_context_tokens
             )
+            optimization_time = time.time() - optimization_start
+            
+            # Log context assembly
+            context_parts = [
+                {
+                    "content": doc.page_content,
+                    "source": doc.metadata.get("id", "unknown")
+                } 
+                for doc in retrieved_docs
+            ]
+            logger.log_context_assembly(query_id, context_parts, len(optimized_context))
             
             # Step 5: Dynamic Prompt Generation with Conversation Context
+            prompt_start = time.time()
             prompt = self._generate_dynamic_prompt(
                 query_text, optimized_context, query_analysis, 
                 conversation_history=conversation_history, is_follow_up=is_follow_up
             )
+            prompt_time = time.time() - prompt_start
+            
+            # Log prompt construction
+            logger.log_prompt_construction(
+                query_id,
+                "dynamic_prompt",
+                prompt_template=None,  # Template is generated dynamically
+                variables={
+                    "query_type": query_analysis.get('query_type', 'unknown'),
+                    "context_length": len(optimized_context),
+                    "has_conversation_history": bool(conversation_history),
+                    "is_follow_up": is_follow_up,
+                    "prompt_generation_time": prompt_time
+                }
+            )
+            
+            # Log final prompt
+            context_summary = {
+                "source_count": len(retrieved_docs),
+                "total_length": len(optimized_context),
+                "optimization_time": optimization_time
+            }
+            logger.log_final_prompt(query_id, prompt, context_summary)
             
             # Step 6: Answer Generation
-            answer = self._generate_answer(prompt)
+            llm_start = time.time()
+            answer = self._generate_answer(prompt, query_id)  # Pass query_id for logging
+            llm_time = time.time() - llm_start
             
             # Step 7: Confidence Scoring
             confidence = None
@@ -165,10 +227,15 @@ class EnhancedQueryEngine:
             # Update statistics
             self._update_stats(response)
             
+            # Log query completion
+            logger.log_query_complete(query_id, processing_time, len(answer))
+            
             logging.info(f"Query processed successfully in {processing_time:.2f}s")
             return response
             
         except Exception as e:
+            # Log error
+            logger.log_error(query_id, e, "enhanced_query_processing")
             logging.error(f"Error processing query: {e}")
             # Return fallback response
             return self._create_fallback_response(query_text, str(e), time.time() - start_time)
@@ -295,18 +362,28 @@ class EnhancedQueryEngine:
         
         return prompt
 
-    def _generate_answer(self, prompt: str) -> str:
+    def _generate_answer(self, prompt: str, query_id: str = None) -> str:
         """Generate answer using the LLM"""
         try:
-            response = self.llm.invoke(prompt)
+            response = self.llm.complete(prompt)
             
             if hasattr(response, "content"):
-                return response.content
+                answer = response.content
             else:
-                return str(response)
+                answer = str(response)
+            
+            # Log LLM response if query_id is provided
+            if query_id:
+                logger = get_query_logger()
+                logger.log_llm_response(query_id, answer)
+                
+            return answer
                 
         except Exception as e:
             logging.error(f"Error generating answer: {e}")
+            if query_id:
+                logger = get_query_logger()
+                logger.log_error(query_id, e, "llm_generation")
             return "Lo siento, no pude generar una respuesta en este momento. Por favor, intenta reformular tu pregunta."
 
     def _calculate_confidence(self, query: str, answer: str, context: str,

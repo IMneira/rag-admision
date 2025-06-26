@@ -1,5 +1,6 @@
 import argparse
 import os
+import time
 
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
@@ -8,6 +9,7 @@ from app.services.rag.llm import get_llm_flash, get_llm_flash_lite
 from langchain.schema.document import Document
 from config import Config
 from app.services.rag.embedding import get_embedding
+from app.services.rag.query_logger import get_query_logger, log_query_context
 
 
 API_KEY = Config.API_KEY
@@ -60,58 +62,117 @@ def main() -> None:
 
 
 def query_rag(query_text: str) -> tuple[str, list[str]]:
-    embedding_function = get_embedding()
-    db = Chroma(
-        persist_directory=CHROMA_PATH,
-        embedding_function=embedding_function
-    )
+    # Initialize logging
+    logger = get_query_logger()
+    query_id = logger.start_query(query_text, "simple_rag")
+    start_time = time.time()
+    
+    try:
+        embedding_function = get_embedding()
+        db = Chroma(
+            persist_directory=CHROMA_PATH,
+            embedding_function=embedding_function
+        )
 
-    core_hits = db.similarity_search_with_score(query_text, k=6)
+        # Log retrieval phase
+        retrieval_start = time.time()
+        core_hits = db.similarity_search_with_score(query_text, k=6)
+        retrieval_time = time.time() - retrieval_start
+        
+        logger.log_retrieval(
+            query_id, 
+            "semantic_similarity", 
+            len(core_hits),
+            {
+                "k": 6,
+                "retrieval_time": retrieval_time,
+                "scores": [float(score) for _, score in core_hits]
+            }
+        )
 
-    extra_ids = []
-    for doc, _ in core_hits:
-        extra_ids.extend(_neighbor_ids(doc.metadata["id"]))
+        # Context expansion with neighbor documents
+        extra_ids = []
+        for doc, _ in core_hits:
+            extra_ids.extend(_neighbor_ids(doc.metadata["id"]))
 
-    extra_docs_raw = db.get(ids=list(set(extra_ids)))
-    extra_docs = [
-        Document(page_content=p, metadata={"id": i})
-        for p, i in zip(extra_docs_raw["documents"], extra_docs_raw["ids"])
-    ]
+        extra_docs_raw = db.get(ids=list(set(extra_ids)))
+        extra_docs = [
+            Document(page_content=p, metadata={"id": i})
+            for p, i in zip(extra_docs_raw["documents"], extra_docs_raw["ids"])
+        ]
 
-    seen = set()
-    all_docs = []
-    for doc, _ in core_hits:
-        if doc.metadata["id"] not in seen:
-            all_docs.append(doc)
-            seen.add(doc.metadata["id"])
-    for doc in extra_docs:
-        if doc.metadata["id"] not in seen:
-            all_docs.append(doc)
-            seen.add(doc.metadata["id"])
+        # Combine core hits with expanded context
+        seen = set()
+        all_docs = []
+        for doc, _ in core_hits:
+            if doc.metadata["id"] not in seen:
+                all_docs.append(doc)
+                seen.add(doc.metadata["id"])
+        for doc in extra_docs:
+            if doc.metadata["id"] not in seen:
+                all_docs.append(doc)
+                seen.add(doc.metadata["id"])
 
 
 
 
-    context_text = _collapse_headers(all_docs)
+        # Log context assembly
+        context_text = _collapse_headers(all_docs)
+        context_parts = [
+            {
+                "content": doc.page_content,
+                "source": doc.metadata.get("id", "unknown")
+            } 
+            for doc in all_docs
+        ]
+        logger.log_context_assembly(query_id, context_parts, len(context_text))
 
-    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    prompt = prompt_template.format(context=context_text, question=query_text)
+        # Log prompt construction
+        prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
+        logger.log_prompt_construction(
+            query_id, 
+            "simple_template",
+            PROMPT_TEMPLATE,
+            {"context": f"<{len(context_text)} chars>", "question": query_text}
+        )
+        
+        prompt = prompt_template.format(context=context_text, question=query_text)
+        
+        # Log final prompt
+        context_summary = {
+            "source_count": len(all_docs),
+            "total_length": len(context_text)
+        }
+        logger.log_final_prompt(query_id, prompt, context_summary)
 
-    model = get_llm_flash()
+        # LLM invocation
+        model = get_llm_flash()
+        llm_start = time.time()
+        response_text = model.complete(prompt)
+        llm_time = time.time() - llm_start
 
-    response_text = model.invoke(prompt)
+        if hasattr(response_text, "content"):
+            response_text = response_text.content
 
-    if hasattr(response_text, "content"):
-        response_text = response_text.content
+        # Log LLM response
+        logger.log_llm_response(query_id, str(response_text), llm_time)
 
-    sources = [doc.metadata.get("id", None) for doc, _ in core_hits]
+        sources = [doc.metadata.get("id", None) for doc, _ in core_hits]
 
-    print(f'Prompt: {prompt}')
+        # Keep original debug prints for backward compatibility
+        print(f'Prompt: {prompt}')
+        formatted_response = f"Response: {response_text}\nSources: {sources}"
+        print(formatted_response)
+        
+        # Log completion
+        total_time = time.time() - start_time
+        logger.log_query_complete(query_id, total_time, len(str(response_text)))
 
-    formatted_response = f"Response: {response_text}\nSources: {sources}"
-    print(formatted_response)
-
-    return (response_text, sources)
+        return (response_text, sources)
+        
+    except Exception as e:
+        logger.log_error(query_id, e, "query_rag")
+        raise
 
 
 if __name__ == "__main__":
