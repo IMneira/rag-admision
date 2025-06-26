@@ -146,8 +146,12 @@ def chat():
             conversation = Conversation.create_conversation(user_id=current_user.id)
             conversation_id = conversation.id
         
-        # Query Enhanced RAG system
-        rag_response = enhanced_rag.query(question, enable_confidence_scoring=True)
+        # Query Enhanced RAG system with conversational memory
+        rag_response = enhanced_rag.query(
+            query_text=question, 
+            conversation_id=conversation_id,
+            enable_confidence_scoring=True
+        )
         
         # Extract document hashes from source IDs and map to URLs
         doc_hashes = []
@@ -166,15 +170,18 @@ def chat():
             if url and url not in source_urls:
                 source_urls.append(url)
         
-        # Create and save message to database
+        # Create and save message to database with conversational context
         message = Message.create_message(
             conversation_id=conversation_id,
             question=question,
             response=str(rag_response.answer),
-            sources=source_urls
+            sources=source_urls,
+            context_used=rag_response.conversation_context,
+            is_follow_up=rag_response.is_follow_up,
+            query_type=rag_response.query_analysis.get('query_type', 'general')
         )
         
-        # Prepare enhanced response data
+        # Prepare enhanced response data with conversational memory
         response_data = {
             'conversation_id': conversation_id,
             'message': message.to_dict(),
@@ -183,7 +190,9 @@ def chat():
                 'complexity_score': rag_response.query_analysis.get('complexity_score', 0.5),
                 'processing_time': round(rag_response.processing_time, 3),
                 'context_summary': rag_response.context_summary,
-                'recommendations': rag_response.recommendations
+                'recommendations': rag_response.recommendations,
+                'is_follow_up': rag_response.is_follow_up,
+                'conversation_context': rag_response.conversation_context
             }
         }
         
@@ -434,6 +443,21 @@ def api_info():
             'path': '/api/rag/reset-stats',
             'method': 'POST',
             'description': 'Reset RAG system statistics (admin only)'
+        },
+        {
+            'path': '/api/conversations/<id>/memory',
+            'method': 'GET',
+            'description': 'Get conversation memory context and summary'
+        },
+        {
+            'path': '/api/conversations/<id>/memory',
+            'method': 'DELETE',
+            'description': 'Clear conversation memory cache'
+        },
+        {
+            'path': '/api/memory/stats',
+            'method': 'GET',
+            'description': 'Get conversation memory system statistics (admin only)'
         }
     ]
     
@@ -449,7 +473,12 @@ def api_info():
                 'Dynamic prompting based on query types',
                 'Context optimization and compression',
                 'Confidence scoring for answers',
-                'Performance monitoring and analytics'
+                'Performance monitoring and analytics',
+                'Hybrid search (semantic + keyword)',
+                'Conversational memory and context',
+                'Follow-up question detection',
+                'Reference resolution for pronouns',
+                'Progressive conversation summarization'
             ]
         }
     )
@@ -494,5 +523,106 @@ def reset_rag_statistics():
         return format_response(
             success=False,
             error=f'Failed to reset RAG statistics: {str(e)}',
+            status_code=500
+        )
+
+
+@api_bp.route('/conversations/<conversation_id>/memory', methods=['GET'])
+@login_required
+def get_conversation_memory(conversation_id):
+    """Get conversation memory context for a specific conversation"""
+    try:
+        # Verify user owns this conversation
+        conversation = Conversation.get_by_id_and_user(conversation_id, current_user.id)
+        if not conversation:
+            return format_response(
+                success=False,
+                error='Conversation not found or access denied',
+                status_code=404
+            )
+        
+        # Load conversation context from memory manager
+        memory_context = enhanced_rag.memory_manager.load_conversation_context(conversation_id)
+        
+        # Prepare response data
+        memory_data = {
+            'conversation_id': conversation_id,
+            'total_turns': memory_context.total_turns,
+            'recent_turns': len(memory_context.recent_turns),
+            'has_summary': bool(memory_context.summary),
+            'summary': memory_context.summary if memory_context.summary else None,
+            'last_updated': memory_context.last_updated.isoformat(),
+            'recent_questions': [
+                {
+                    'question': turn.question,
+                    'timestamp': turn.timestamp.isoformat(),
+                    'turn_index': turn.turn_index
+                }
+                for turn in memory_context.recent_turns[-3:]  # Last 3 questions
+            ]
+        }
+        
+        return format_response(
+            success=True,
+            data=memory_data
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to get conversation memory: {str(e)}',
+            status_code=500
+        )
+
+
+@api_bp.route('/conversations/<conversation_id>/memory', methods=['DELETE'])
+@login_required
+def clear_conversation_memory(conversation_id):
+    """Clear conversation memory cache for a specific conversation"""
+    try:
+        # Verify user owns this conversation
+        conversation = Conversation.get_by_id_and_user(conversation_id, current_user.id)
+        if not conversation:
+            return format_response(
+                success=False,
+                error='Conversation not found or access denied',
+                status_code=404
+            )
+        
+        # Clear memory cache
+        enhanced_rag.memory_manager.clear_conversation_cache(conversation_id)
+        
+        return format_response(
+            success=True,
+            data={'message': 'Conversation memory cache cleared successfully'}
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to clear conversation memory: {str(e)}',
+            status_code=500
+        )
+
+
+@api_bp.route('/memory/stats', methods=['GET'])
+@admin_required
+def get_memory_statistics():
+    """Get conversation memory system statistics (admin only)"""
+    try:
+        memory_stats = enhanced_rag.memory_manager.get_memory_stats()
+        
+        return format_response(
+            success=True,
+            data={
+                'memory_statistics': memory_stats,
+                'description': 'Conversational memory system performance metrics'
+            }
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to get memory statistics: {str(e)}',
             status_code=500
         )

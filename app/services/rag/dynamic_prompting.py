@@ -47,13 +47,15 @@ REGLAS IMPORTANTES:
             QueryType.REQUIREMENT: self._get_requirement_examples()
         }
 
-    def generate_prompt(self, query: str, context: str, query_type: str, 
+    def generate_prompt(self, query: str, context: str, query_type: QueryType, 
                        strategy: PromptStrategy = PromptStrategy.DIRECT,
                        include_examples: bool = False,
-                       confidence_needed: bool = False) -> str:
-        """Generate dynamic prompt based on query type and strategy"""
+                       confidence_needed: bool = False,
+                       conversation_history: str = "",
+                       is_follow_up: bool = False) -> str:
+        """Generate dynamic prompt based on query type, strategy, and conversation context"""
         
-        # Convert string to enum
+        # Convert string to enum if needed
         q_type = QueryType(query_type) if isinstance(query_type, str) else query_type
         
         # Get base template for query type
@@ -71,11 +73,16 @@ REGLAS IMPORTANTES:
         if confidence_needed:
             template = self._add_confidence_instructions(template)
         
+        # Add conversation context for follow-up questions
+        if is_follow_up and conversation_history:
+            template = self._add_conversational_context(template, conversation_history)
+        
         # Format the final prompt
         return template.format(
             base_instructions=self.base_instructions,
             context=context,
-            question=query
+            question=query,
+            conversation_history=conversation_history if conversation_history else ""
         )
 
     def _get_factual_template(self) -> str:
@@ -237,6 +244,26 @@ Al final de tu respuesta, incluye una evaluación de confianza:
 
 """
         return template.replace("RESPUESTA:", confidence_instruction + "RESPUESTA:")
+
+    def _add_conversational_context(self, template: str, conversation_history: str) -> str:
+        """Add conversational context for follow-up questions"""
+        conversational_instruction = f"""
+CONTEXTO DE CONVERSACIÓN:
+Estás respondiendo a una pregunta de seguimiento. Aquí está el historial relevante de la conversación:
+
+{conversation_history}
+
+INSTRUCCIONES ESPECIALES PARA PREGUNTAS DE SEGUIMIENTO:
+- Considera el contexto de la conversación previa
+- Haz referencia a información mencionada anteriormente cuando sea relevante
+- Si la pregunta usa referencias (como "esto", "eso", "lo anterior"), resuélvelas usando el contexto
+- Mantén coherencia con respuestas anteriores
+- Evita repetir información ya proporcionada, enfócate en lo nuevo o específico
+- Si hay contradicciones, prioriza la información más específica y reciente
+
+"""
+        # Add the conversational context before the base instructions
+        return conversational_instruction + template
 
     def _get_factual_examples(self) -> str:
         return """

@@ -17,6 +17,7 @@ from app.services.rag.context_optimizer import ContextOptimizer
 from app.services.rag.dynamic_prompting import DynamicPromptGenerator, PromptStrategy
 from app.services.rag.confidence_scorer import ConfidenceScorer, ConfidenceScore
 from app.services.rag.hybrid_search import HybridSearcher
+from app.services.rag.conversational_memory import MemoryManager, ConversationContext
 from config import Config
 
 
@@ -30,6 +31,8 @@ class EnhancedRAGResponse:
     processing_time: float
     context_summary: Dict
     recommendations: List[str]
+    conversation_context: Optional[Dict] = None
+    is_follow_up: bool = False
 
 
 class EnhancedQueryEngine:
@@ -43,6 +46,7 @@ class EnhancedQueryEngine:
         self.prompt_generator = DynamicPromptGenerator()
         self.confidence_scorer = ConfidenceScorer()
         self.hybrid_searcher = HybridSearcher(chroma_path, bm25_path)
+        self.memory_manager = MemoryManager()
         
         # Initialize LLM
         self.llm = ChatGoogleGenerativeAI(
@@ -60,55 +64,95 @@ class EnhancedQueryEngine:
         
         logging.info("Enhanced Query Engine initialized successfully")
 
-    def query(self, query_text: str, enable_confidence_scoring: bool = True,
+    def query(self, query_text: str, conversation_id: str = None,
+              enable_confidence_scoring: bool = True,
               max_context_tokens: int = 10000) -> EnhancedRAGResponse:
         """
-        Process a query using the enhanced RAG pipeline
+        Process a query using the enhanced RAG pipeline with conversational memory
         
         Args:
             query_text: User's question
+            conversation_id: Optional conversation ID for memory context
             enable_confidence_scoring: Whether to calculate confidence scores
             max_context_tokens: Maximum tokens for context (for compression)
         """
         start_time = time.time()
         
         try:
-            # Step 1: Query Enhancement and Analysis
-            logging.info(f"Processing query: {query_text}")
-            query_analysis = self.query_enhancer.enhance_query(query_text)
+            # Step 1: Load Conversation Context
+            conversation_context = None
+            is_follow_up = False
+            conversation_history = ""
             
-            # Step 2: Hybrid Multi-Query Retrieval
+            if conversation_id:
+                conversation_context = self.memory_manager.load_conversation_context(conversation_id)
+                is_follow_up = self.memory_manager.detect_follow_up_question(query_text, conversation_context)
+                conversation_history = self.memory_manager.get_conversation_context_for_query(
+                    conversation_id, query_text
+                )
+                logging.info(f"Loaded conversation context: {conversation_context.total_turns} turns, "
+                           f"follow-up: {is_follow_up}")
+            
+            # Step 2: Enhanced Query with Conversation Context
+            logging.info(f"Processing query: {query_text}")
+            
+            # Enhance query with conversation context if available
+            enhanced_query_text = query_text
+            if conversation_history and is_follow_up:
+                enhanced_query_text = f"{conversation_history}\n\nCONSULTA ACTUAL: {query_text}"
+            
+            query_analysis = self.query_enhancer.enhance_query(enhanced_query_text)
+            
+            # Step 3: Hybrid Multi-Query Retrieval
             retrieved_docs, similarity_scores = self._hybrid_multi_query_retrieval(query_analysis)
             
-            # Step 3: Context Optimization
+            # Step 4: Context Optimization
             optimized_context = self._optimize_context(
                 retrieved_docs, query_text, query_analysis['query_type'], max_context_tokens
             )
             
-            # Step 4: Dynamic Prompt Generation
+            # Step 5: Dynamic Prompt Generation with Conversation Context
             prompt = self._generate_dynamic_prompt(
-                query_text, optimized_context, query_analysis
+                query_text, optimized_context, query_analysis, 
+                conversation_history=conversation_history, is_follow_up=is_follow_up
             )
             
-            # Step 5: Answer Generation
+            # Step 6: Answer Generation
             answer = self._generate_answer(prompt)
             
-            # Step 6: Confidence Scoring
+            # Step 7: Confidence Scoring
             confidence = None
             if enable_confidence_scoring:
                 confidence = self._calculate_confidence(
                     query_text, answer, optimized_context, retrieved_docs, similarity_scores
                 )
             
-            # Step 7: Extract Sources
+            # Step 8: Extract Sources
             sources = self._extract_sources(retrieved_docs)
             
-            # Step 8: Generate Recommendations
+            # Step 9: Generate Recommendations
             recommendations = self._generate_recommendations(query_analysis, confidence)
             
-            # Step 9: Create Response
+            # Step 10: Update Conversation Memory
+            if conversation_id:
+                updated_context = self.memory_manager.add_turn_to_context(
+                    conversation_id, query_text, answer, sources
+                )
+                conversation_context = updated_context
+            
+            # Step 11: Create Enhanced Response with Conversation Context
             processing_time = time.time() - start_time
             context_summary = self.context_optimizer.get_context_summary(retrieved_docs)
+            
+            # Prepare conversation context metadata
+            conversation_metadata = None
+            if conversation_context:
+                conversation_metadata = {
+                    'total_turns': conversation_context.total_turns,
+                    'has_summary': bool(conversation_context.summary),
+                    'recent_turns': len(conversation_context.recent_turns),
+                    'last_updated': conversation_context.last_updated.isoformat()
+                }
             
             response = EnhancedRAGResponse(
                 answer=answer,
@@ -117,7 +161,9 @@ class EnhancedQueryEngine:
                 query_analysis=query_analysis,
                 processing_time=processing_time,
                 context_summary=context_summary,
-                recommendations=recommendations
+                recommendations=recommendations,
+                conversation_context=conversation_metadata,
+                is_follow_up=is_follow_up
             )
             
             # Update statistics
@@ -225,21 +271,30 @@ class EnhancedQueryEngine:
         
         return compressed_context
 
-    def _generate_dynamic_prompt(self, query: str, context: str, query_analysis: Dict) -> str:
-        """Generate dynamic prompt based on query analysis"""
+    def _generate_dynamic_prompt(self, query: str, context: str, query_analysis: Dict,
+                                conversation_history: str = "", is_follow_up: bool = False) -> str:
+        """Generate dynamic prompt based on query analysis and conversation context"""
         query_type = QueryType(query_analysis['query_type'])
         complexity_score = query_analysis['complexity_score']
         
         # Determine optimal prompting strategy
         strategy = self.prompt_generator.get_optimal_strategy(query_type, complexity_score)
         
-        # Generate prompt with confidence scoring enabled
+        # Adjust strategy for conversational context
+        if is_follow_up and conversation_history:
+            # Use conversational strategy for follow-up questions
+            from app.services.rag.dynamic_prompting import PromptStrategy
+            strategy = PromptStrategy.CHAIN_OF_THOUGHT
+        
+        # Generate prompt with confidence scoring and conversation context
         prompt = self.prompt_generator.generate_prompt(
             query=query,
             context=context,
             query_type=query_type,
             strategy=strategy,
-            confidence_needed=True
+            confidence_needed=True,
+            conversation_history=conversation_history,
+            is_follow_up=is_follow_up
         )
         
         return prompt

@@ -14,12 +14,17 @@ class Conversation(db.Model):
     title = db.Column(db.String(255), nullable=True)
     user_id = db.Column(String(36), db.ForeignKey('users.id'), nullable=True)  # Nullable for backward compatibility
     
+    # Conversational memory fields
+    summary = db.Column(db.Text, nullable=True)  # Conversation summary for memory optimization
+    total_turns = db.Column(db.Integer, nullable=False, default=0)  # Track total conversation turns
+    
     # Relationship with messages
     messages = db.relationship('Message', backref='conversation', lazy=True, cascade='all, delete-orphan')
     
     def __init__(self, title=None, user_id=None):
         self.title = title
         self.user_id = user_id
+        self.total_turns = 0
     
     def to_dict(self):
         """Convert conversation to dictionary for API responses"""
@@ -30,6 +35,8 @@ class Conversation(db.Model):
             'title': self.title,
             'user_id': self.user_id,
             'message_count': len(self.messages),
+            'total_turns': self.total_turns,
+            'has_summary': bool(self.summary),
             'last_message': self.messages[-1].timestamp.isoformat() + 'Z' if self.messages else None
         }
     
@@ -79,6 +86,18 @@ class Conversation(db.Model):
     
     def update_timestamp(self):
         """Update the updated_at timestamp"""
+        self.updated_at = datetime.utcnow()
+        db.session.commit()
+    
+    def update_summary(self, summary: str):
+        """Update conversation summary"""
+        self.summary = summary
+        self.updated_at = datetime.utcnow()
+        db.session.commit()
+    
+    def increment_turns(self):
+        """Increment total turns counter"""
+        self.total_turns += 1
         self.updated_at = datetime.utcnow()
         db.session.commit()
     
