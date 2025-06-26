@@ -10,7 +10,7 @@ from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
-from langchain_google_genai import ChatGoogleGenerativeAI
+from app.services.rag.llm import get_llm_flash, get_llm_flash_lite
 from langchain.schema.document import Document
 
 from config import Config
@@ -49,11 +49,7 @@ class ConversationSummarizer:
     """Handles summarization of conversation history"""
     
     def __init__(self):
-        self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            google_api_key=Config.API_KEY,
-            temperature=0.1  # Lower temperature for consistent summaries
-        )
+        self.llm = get_llm_flash()  # Use Gemini Flash for summarization
     
     def summarize_turns(self, turns: List[ConversationTurn], 
                        existing_summary: str = "") -> str:

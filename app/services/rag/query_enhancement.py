@@ -7,7 +7,7 @@ import re
 import logging
 from typing import List, Dict, Tuple
 from enum import Enum
-from langchain_google_genai import ChatGoogleGenerativeAI
+from app.services.rag.llm import get_llm_flash, get_llm_flash_lite
 from config import Config
 
 
@@ -23,11 +23,7 @@ class QueryType(Enum):
 
 class QueryEnhancer:
     def __init__(self):
-        self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            google_api_key=Config.API_KEY,
-            temperature=0.3
-        )
+        self.llm = get_llm_flash()
         
         # Spanish question patterns for classification
         self.question_patterns = {

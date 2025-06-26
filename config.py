@@ -35,4 +35,5 @@ class Config:
 
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
     API_KEY = os.getenv("API_KEY")
-    GEMINI_MODEL = os.getenv("GEMINI_MODEL")
+    GEMINI_MODEL_FLASH = os.getenv("GEMINI_MODEL_FLASH")
+    GEMINI_MODEL_LITE = os.getenv("GEMINI_MODEL_LITE")

@@ -8,7 +8,7 @@ import logging
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from langchain_chroma import Chroma
-from langchain_google_genai import ChatGoogleGenerativeAI
+from app.services.rag.llm import get_llm_flash, get_llm_flash_lite
 from langchain.schema.document import Document
 
 from app.services.rag.embedding import get_embedding
@@ -49,11 +49,7 @@ class EnhancedQueryEngine:
         self.memory_manager = MemoryManager()
         
         # Initialize LLM
-        self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            google_api_key=Config.API_KEY,
-            temperature=0.2
-        )
+        self.llm = get_llm_flash()  # Use Gemini Flash for enhanced performance
         
         # Performance tracking
         self.query_stats = {

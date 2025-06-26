@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
-from langchain_google_genai import ChatGoogleGenerativeAI
+from app.services.rag.llm import get_llm_flash, get_llm_flash_lite
 from langchain.schema.document import Document
 from config import Config
 from app.services.rag.embedding import get_embedding
@@ -97,10 +97,7 @@ def query_rag(query_text: str) -> tuple[str, list[str]]:
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=query_text)
 
-    model = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        google_api_key=API_KEY
-    )
+    model = get_llm_flash()
 
     response_text = model.invoke(prompt)
 

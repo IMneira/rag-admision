@@ -14,23 +14,100 @@ import tqdm
 import time
 
 from app.services.rag.embedding import get_embedding
-from app.services.rag.llm import get_llm
+from app.services.rag.llm import get_llm_flash, get_llm_flash_lite
 from config import Config
 from app.services.rag.drive_loader import iter_local_docs
 from app.services.rag.hybrid_search import BM25KeywordSearcher
+import json
 
 
 CHROMA_PATH = "chroma"
 BM25_PATH = "bm25_index"
 DATA_PATH = "data"
+HEADER_CACHE_PATH = "header_cache.json"
 HEADER_TAG = "§§DOC_HEADER§§ "
 DRIVE_FOLDER_ID = '1rax_JCVVrzFoJBQn8OKPcDFZ5iLyMysN'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+def get_existing_document_sources() -> set[str]:
+    """Get set of document sources that are already in the Chroma database"""
+    try:
+        db = Chroma(
+            persist_directory=CHROMA_PATH,
+            embedding_function=get_embedding()
+        )
+        existing_items = db.get(include=["metadatas"])
+        
+        # Extract unique source paths from existing documents
+        existing_sources = set()
+        for metadata in existing_items.get("metadatas", []):
+            if metadata and "source" in metadata:
+                existing_sources.add(metadata["source"])
+        
+        logging.info(f"Found {len(existing_sources)} existing document sources in database")
+        return existing_sources
+        
+    except Exception as e:
+        logging.warning(f"Could not access existing database: {e}")
+        return set()
+
+
+def filter_new_documents(all_documents: list[Document], existing_sources: set[str]) -> tuple[list[Document], list[Document]]:
+    """
+    Separate documents into new and existing based on source paths
+    
+    Returns:
+        tuple: (new_documents, existing_documents)
+    """
+    new_documents = []
+    existing_documents = []
+    
+    for doc in all_documents:
+        source = doc.metadata.get("source", "")
+        if source in existing_sources:
+            existing_documents.append(doc)
+        else:
+            new_documents.append(doc)
+    
+    logging.info(f"Document filtering: {len(new_documents)} new, {len(existing_documents)} existing")
+    return new_documents, existing_documents
+
+
+def load_header_cache() -> dict[str, str]:
+    """Load cached headers from disk"""
+    try:
+        if os.path.exists(HEADER_CACHE_PATH):
+            with open(HEADER_CACHE_PATH, 'r', encoding='utf-8') as f:
+                cache = json.load(f)
+                logging.info(f"Loaded {len(cache)} cached headers")
+                return cache
+    except Exception as e:
+        logging.warning(f"Failed to load header cache: {e}")
+    
+    return {}
+
+
+def save_header_cache(headers: dict[str, str]) -> None:
+    """Save headers to cache file"""
+    try:
+        with open(HEADER_CACHE_PATH, 'w', encoding='utf-8') as f:
+            json.dump(headers, f, indent=2, ensure_ascii=False)
+        logging.info(f"Saved {len(headers)} headers to cache")
+    except Exception as e:
+        logging.error(f"Failed to save header cache: {e}")
+
+
 def build_headers(docs: list[Document]) -> dict[str, str]:
-    llm = get_llm()
+    """Build headers for documents, using cache when available"""
+    if not docs:
+        return {}
+    
+    # Load existing header cache
+    cached_headers = load_header_cache()
+    
+    llm = get_llm_flash_lite()
     grouped: dict[str, list[str]] = defaultdict(list)
 
     for d in tqdm.tqdm(docs, desc="Grouping documents"):
@@ -42,9 +119,18 @@ def build_headers(docs: list[Document]) -> dict[str, str]:
 
     headers: dict[str, str] = {}
     failed_headers = []
+    cached_count = 0
+    generated_count = 0
     
     for src, pages in tqdm.tqdm(grouped.items(), desc="Building headers"):
         try:
+            # Check if header is already cached
+            if src in cached_headers:
+                headers[src] = cached_headers[src]
+                cached_count += 1
+                continue
+            
+            # Generate new header
             whole_doc = "\n".join(pages)[:10000]          # stay under token limit
             prompt = (
                 "Eres un resumidor conciso.\n"
@@ -53,16 +139,29 @@ def build_headers(docs: list[Document]) -> dict[str, str]:
                 "antepuestos a cada fragmento para la generación aumentada por recuperación.\n\n"
                 f"DOCUMENTO:\n{whole_doc}\n\nENCABEZADO:"
             )
-            headers[src] = llm.complete(prompt).text.strip()
+            new_header = llm.complete(prompt).text.strip()
+            headers[src] = new_header
+            generated_count += 1
+            
+            # Add to cache and save periodically
+            cached_headers[src] = new_header
+            if generated_count % 5 == 0:  # Save cache every 5 new headers
+                save_header_cache(cached_headers)
+                
             time.sleep(7)  # avoid rate limits
         except Exception as e:
             logging.error(f"Failed to build header for {src}: {e}")
             failed_headers.append(src)
             continue
 
+    # Save final cache
+    if generated_count > 0:
+        save_header_cache(cached_headers)
+
     if failed_headers:
         logging.warning(f"Failed to build headers for {len(failed_headers)} documents: {failed_headers}")
     
+    logging.info(f"Headers: {cached_count} from cache, {generated_count} newly generated, {len(failed_headers)} failed")
     logging.info(f"Successfully built headers for {len(headers)} out of {len(grouped)} documents")
     return headers
     
@@ -78,25 +177,45 @@ def main():
             print("✨ Clearing Database")
             clear_database()
 
+        # Step 1: Load all documents
         if args.drive:
             print("✨ Ingesting documents from Google Drive")
-            documents = ingest_drive_folder(DRIVE_FOLDER_ID)
-            print(f"Successfully loaded {len(documents)} documents from Drive")
+            all_documents = ingest_drive_folder(DRIVE_FOLDER_ID)
+            print(f"Successfully loaded {len(all_documents)} documents from Drive")
         else:
             print("✨ Ingesting documents from local data directory")
-            documents = load_documents()
+            all_documents = load_documents()
 
-        if not documents:
+        if not all_documents:
             logging.warning("No documents were loaded. Exiting.")
             return
 
-        logging.info(f"Total documents loaded: {len(documents)}")
+        logging.info(f"Total documents loaded: {len(all_documents)}")
         
-        headers = build_headers(documents)
-        chunks = split_documents(documents)
+        # Step 2: Check which documents are already in the database (EARLY FILTERING)
+        print("🔍 Checking for existing documents in database...")
+        existing_sources = get_existing_document_sources()
+        new_documents, existing_documents = filter_new_documents(all_documents, existing_sources)
+        
+        if not new_documents:
+            print("✅ No new documents found. Database is up to date!")
+            print(f"📊 Skipped processing {len(existing_documents)} existing documents")
+            return
+        
+        print(f"📝 Processing {len(new_documents)} new documents")
+        print(f"⏭️  Skipping {len(existing_documents)} existing documents")
+        
+        # Step 3: Only process NEW documents through expensive pipeline
+        print("🤖 Building headers for new documents only...")
+        headers = build_headers(new_documents)  # Only process new docs!
+        
+        print("✂️  Splitting new documents into chunks...")
+        new_chunks = split_documents(new_documents)  # Only split new docs!
 
+        # Step 4: Apply headers to new chunks
+        print("📋 Applying headers to new chunks...")
         successful_chunks = 0
-        for chunk in chunks:
+        for chunk in new_chunks:
             try:
                 header = headers.get(chunk.metadata["source"])
                 if header:
@@ -106,11 +225,18 @@ def main():
                 logging.error(f"Error processing chunk from {chunk.metadata.get('source', 'unknown')}: {e}")
                 continue
 
-        logging.info(f"Successfully processed {successful_chunks} out of {len(chunks)} chunks")
+        logging.info(f"Successfully processed {successful_chunks} out of {len(new_chunks)} new chunks")
         
+        # Step 5: Add to databases (Chroma will double-check, BM25 will be incremental)
         if successful_chunks > 0:
-            add_to_chroma(chunks)
-            build_bm25_index(chunks)
+            print("💾 Adding new chunks to Chroma database...")
+            add_to_chroma(new_chunks)
+            
+            print("🔍 Updating BM25 keyword search index...")
+            build_bm25_index_incremental(new_chunks)  # Use incremental update
+            
+            print(f"✅ Successfully processed {len(new_documents)} new documents!")
+            print(f"⚡ Saved significant time by skipping {len(existing_documents)} existing documents")
         else:
             logging.error("No chunks were successfully processed. Nothing to add to database.")
             
@@ -262,7 +388,7 @@ def calculate_chunk_ids(chunks: list[Document]) -> list[Document]:
     return chunks
 
 def build_bm25_index(chunks: list[Document]) -> None:
-    """Build BM25 keyword search index from document chunks"""
+    """Build BM25 keyword search index from document chunks (full rebuild)"""
     try:
         print("✨ Building BM25 keyword search index")
         logging.info(f"Building BM25 index for {len(chunks)} chunks")
@@ -281,11 +407,86 @@ def build_bm25_index(chunks: list[Document]) -> None:
         print(f"❌ Failed to build BM25 index: {e}")
 
 
+def build_bm25_index_incremental(new_chunks: list[Document]) -> None:
+    """Build or update BM25 keyword search index incrementally"""
+    try:
+        if not new_chunks:
+            print("✅ No new chunks for BM25 index")
+            return
+            
+        logging.info(f"Updating BM25 index with {len(new_chunks)} new chunks")
+        
+        # Initialize BM25 searcher
+        bm25_searcher = BM25KeywordSearcher(BM25_PATH)
+        
+        # Check if index exists
+        index_file = os.path.join(BM25_PATH, "bm25_index.pkl")
+        
+        if os.path.exists(index_file):
+            # Index exists, try incremental update
+            print(f"📄 Existing BM25 index found, adding {len(new_chunks)} new chunks...")
+            try:
+                bm25_searcher.add_documents(new_chunks)
+                logging.info("BM25 index updated incrementally")
+                print("✅ BM25 index updated successfully")
+                return
+            except Exception as e:
+                logging.warning(f"Incremental update failed: {e}. Falling back to full rebuild...")
+                print("⚠️  Incremental update failed, rebuilding from scratch...")
+        
+        # No index exists or incremental failed - need to rebuild with all documents
+        print("🔄 No existing index found, need to load all documents for full rebuild...")
+        
+        # Get all existing chunks from Chroma to rebuild complete BM25 index
+        try:
+            db = Chroma(
+                persist_directory=CHROMA_PATH,
+                embedding_function=get_embedding()
+            )
+            
+            # Get ALL existing chunks
+            all_existing = db.get(include=["documents", "metadatas"])
+            existing_chunks = []
+            
+            if all_existing.get("documents"):
+                for i, (content, metadata) in enumerate(zip(
+                    all_existing["documents"], 
+                    all_existing.get("metadatas", [])
+                )):
+                    doc = Document(page_content=content, metadata=metadata or {})
+                    existing_chunks.append(doc)
+            
+            # Combine existing + new chunks
+            all_chunks = existing_chunks + new_chunks
+            
+            print(f"🔨 Building complete BM25 index with {len(all_chunks)} total chunks...")
+            bm25_searcher.build_index(all_chunks, force_rebuild=True)
+            
+            logging.info(f"BM25 index rebuilt with {len(existing_chunks)} existing + {len(new_chunks)} new chunks")
+            print("✅ BM25 index built successfully")
+            
+        except Exception as e:
+            logging.error(f"Failed to rebuild BM25 index: {e}")
+            print(f"❌ Failed to build BM25 index: {e}")
+        
+    except Exception as e:
+        logging.error(f"Failed to update BM25 index: {e}")
+        print(f"❌ Failed to update BM25 index: {e}")
+
+
 def clear_database() -> None:
+    """Clear all databases and caches"""
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
+        print("🗑️  Cleared Chroma vector database")
+    
     if os.path.exists(BM25_PATH):
         shutil.rmtree(BM25_PATH)
+        print("🗑️  Cleared BM25 keyword index")
+    
+    if os.path.exists(HEADER_CACHE_PATH):
+        os.remove(HEADER_CACHE_PATH)
+        print("🗑️  Cleared header cache")
 
 
 def process_single_document(file_path: str, source_url: str = None) -> dict:
