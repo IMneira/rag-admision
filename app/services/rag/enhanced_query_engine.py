@@ -16,6 +16,7 @@ from app.services.rag.query_enhancement import QueryEnhancer, QueryType
 from app.services.rag.context_optimizer import ContextOptimizer
 from app.services.rag.dynamic_prompting import DynamicPromptGenerator, PromptStrategy
 from app.services.rag.confidence_scorer import ConfidenceScorer, ConfidenceScore
+from app.services.rag.hybrid_search import HybridSearcher
 from config import Config
 
 
@@ -32,27 +33,22 @@ class EnhancedRAGResponse:
 
 
 class EnhancedQueryEngine:
-    def __init__(self, chroma_path: str = "chroma"):
+    def __init__(self, chroma_path: str = "chroma", bm25_path: str = "bm25_index"):
         self.chroma_path = chroma_path
-        self.embedding_function = get_embedding()
+        self.bm25_path = bm25_path
         
         # Initialize all components
         self.query_enhancer = QueryEnhancer()
         self.context_optimizer = ContextOptimizer()
         self.prompt_generator = DynamicPromptGenerator()
         self.confidence_scorer = ConfidenceScorer()
+        self.hybrid_searcher = HybridSearcher(chroma_path, bm25_path)
         
         # Initialize LLM
         self.llm = ChatGoogleGenerativeAI(
             model="gemini-2.5-flash",
             google_api_key=Config.API_KEY,
             temperature=0.2
-        )
-        
-        # Initialize vector database
-        self.db = Chroma(
-            persist_directory=self.chroma_path,
-            embedding_function=self.embedding_function
         )
         
         # Performance tracking
@@ -65,7 +61,7 @@ class EnhancedQueryEngine:
         logging.info("Enhanced Query Engine initialized successfully")
 
     def query(self, query_text: str, enable_confidence_scoring: bool = True,
-              max_context_tokens: int = 3000) -> EnhancedRAGResponse:
+              max_context_tokens: int = 10000) -> EnhancedRAGResponse:
         """
         Process a query using the enhanced RAG pipeline
         
@@ -81,8 +77,8 @@ class EnhancedQueryEngine:
             logging.info(f"Processing query: {query_text}")
             query_analysis = self.query_enhancer.enhance_query(query_text)
             
-            # Step 2: Multi-Query Retrieval
-            retrieved_docs, similarity_scores = self._multi_query_retrieval(query_analysis)
+            # Step 2: Hybrid Multi-Query Retrieval
+            retrieved_docs, similarity_scores = self._hybrid_multi_query_retrieval(query_analysis)
             
             # Step 3: Context Optimization
             optimized_context = self._optimize_context(
@@ -135,36 +131,49 @@ class EnhancedQueryEngine:
             # Return fallback response
             return self._create_fallback_response(query_text, str(e), time.time() - start_time)
 
-    def _multi_query_retrieval(self, query_analysis: Dict) -> Tuple[List[Document], List[float]]:
-        """Retrieve documents using multiple query variations"""
+    def _hybrid_multi_query_retrieval(self, query_analysis: Dict) -> Tuple[List[Document], List[float]]:
+        """Retrieve documents using hybrid search with multiple query variations"""
         all_queries = query_analysis['all_queries']
         optimal_k = self.query_enhancer.get_optimal_k(query_analysis['complexity_score'])
+        query_type = query_analysis['query_type']
         
-        # Collect all unique documents
+        # Collect all unique documents from hybrid search
         all_docs = []
         all_scores = []
         seen_ids = set()
         
         for query_variant in all_queries[:3]:  # Limit to 3 variants to control latency
             try:
-                docs_with_scores = self.db.similarity_search_with_score(query_variant, k=optimal_k)
+                # Use hybrid search for each query variant
+                hybrid_docs = self.hybrid_searcher.search(
+                    query_variant, k=optimal_k, query_type=query_type
+                )
                 
-                for doc, score in docs_with_scores:
+                for doc in hybrid_docs:
                     doc_id = doc.metadata.get('id', '')
                     if doc_id not in seen_ids:
                         all_docs.append(doc)
+                        # Assign a score based on position (higher rank = lower score)
+                        score = 1.0 / (len(all_docs) + 1)
                         all_scores.append(score)
                         seen_ids.add(doc_id)
                         
             except Exception as e:
-                logging.warning(f"Error in retrieval for query variant '{query_variant}': {e}")
+                logging.warning(f"Error in hybrid retrieval for query variant '{query_variant}': {e}")
                 continue
         
         # Add neighbor expansion for top documents
         if all_docs:
             expanded_docs = self._expand_with_neighbors(all_docs[:optimal_k])
-            all_docs.extend(expanded_docs)
+            # Add expanded docs without duplicates
+            for doc in expanded_docs:
+                doc_id = doc.metadata.get('id', '')
+                if doc_id not in seen_ids:
+                    all_docs.append(doc)
+                    all_scores.append(0.1)  # Lower score for neighbor docs
+                    seen_ids.add(doc_id)
         
+        logging.info(f"Hybrid retrieval completed: {len(all_docs)} unique documents")
         return all_docs, all_scores
 
     def _expand_with_neighbors(self, core_docs: List[Document]) -> List[Document]:
@@ -180,7 +189,9 @@ class EnhancedQueryEngine:
         unique_neighbor_ids = list(set(neighbor_ids))
         if unique_neighbor_ids:
             try:
-                extra_docs_raw = self.db.get(ids=unique_neighbor_ids)
+                # Access Chroma database through hybrid searcher
+                chroma_db = self.hybrid_searcher.semantic_searcher.db
+                extra_docs_raw = chroma_db.get(ids=unique_neighbor_ids)
                 neighbor_docs = [
                     Document(page_content=content, metadata={"id": doc_id})
                     for content, doc_id in zip(extra_docs_raw["documents"], extra_docs_raw["ids"])
@@ -348,7 +359,17 @@ class EnhancedQueryEngine:
 
     def get_statistics(self) -> Dict:
         """Get query processing statistics"""
-        return self.query_stats.copy()
+        stats = self.query_stats.copy()
+        
+        # Add hybrid search statistics
+        try:
+            hybrid_stats = self.hybrid_searcher.get_stats()
+            stats['hybrid_search'] = hybrid_stats
+        except Exception as e:
+            logging.warning(f"Failed to get hybrid search stats: {e}")
+            stats['hybrid_search'] = {'error': str(e)}
+            
+        return stats
 
     def reset_statistics(self):
         """Reset query statistics"""
@@ -357,6 +378,18 @@ class EnhancedQueryEngine:
             'avg_processing_time': 0.0,
             'confidence_distribution': {'high': 0, 'medium': 0, 'low': 0, 'very_low': 0}
         }
+        
+    def build_keyword_index(self, documents: List[Document], force_rebuild: bool = False):
+        """Build BM25 keyword index"""
+        self.hybrid_searcher.build_keyword_index(documents, force_rebuild)
+        
+    def add_documents_to_indexes(self, documents: List[Document]):
+        """Add new documents to both semantic and keyword indexes"""
+        self.hybrid_searcher.add_documents(documents)
+        
+    def update_hybrid_config(self, **kwargs):
+        """Update hybrid search configuration"""
+        self.hybrid_searcher.update_config(**kwargs)
 
 
 def test_enhanced_query_engine():

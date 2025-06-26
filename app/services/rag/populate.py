@@ -17,9 +17,11 @@ from app.services.rag.embedding import get_embedding
 from app.services.rag.llm import get_llm
 from config import Config
 from app.services.rag.drive_loader import iter_local_docs
+from app.services.rag.hybrid_search import BM25KeywordSearcher
 
 
 CHROMA_PATH = "chroma"
+BM25_PATH = "bm25_index"
 DATA_PATH = "data"
 HEADER_TAG = "§§DOC_HEADER§§ "
 DRIVE_FOLDER_ID = '1rax_JCVVrzFoJBQn8OKPcDFZ5iLyMysN'
@@ -108,6 +110,7 @@ def main():
         
         if successful_chunks > 0:
             add_to_chroma(chunks)
+            build_bm25_index(chunks)
         else:
             logging.error("No chunks were successfully processed. Nothing to add to database.")
             
@@ -258,9 +261,31 @@ def calculate_chunk_ids(chunks: list[Document]) -> list[Document]:
 
     return chunks
 
+def build_bm25_index(chunks: list[Document]) -> None:
+    """Build BM25 keyword search index from document chunks"""
+    try:
+        print("✨ Building BM25 keyword search index")
+        logging.info(f"Building BM25 index for {len(chunks)} chunks")
+        
+        # Initialize BM25 searcher
+        bm25_searcher = BM25KeywordSearcher(BM25_PATH)
+        
+        # Build the index
+        bm25_searcher.build_index(chunks, force_rebuild=True)
+        
+        logging.info("BM25 index built successfully")
+        print("✅ BM25 index built successfully")
+        
+    except Exception as e:
+        logging.error(f"Failed to build BM25 index: {e}")
+        print(f"❌ Failed to build BM25 index: {e}")
+
+
 def clear_database() -> None:
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
+    if os.path.exists(BM25_PATH):
+        shutil.rmtree(BM25_PATH)
 
 
 def process_single_document(file_path: str, source_url: str = None) -> dict:
@@ -358,6 +383,16 @@ def process_single_document(file_path: str, source_url: str = None) -> dict:
                 db.add_documents(new_chunks, ids=new_chunk_ids)
                 result['chunks_added'] = len(new_chunks)
                 logging.info(f"Added {len(new_chunks)} new chunks to database")
+                
+                # Also add to BM25 index
+                try:
+                    bm25_searcher = BM25KeywordSearcher(BM25_PATH)
+                    bm25_searcher.add_documents(new_chunks)
+                    logging.info(f"Added {len(new_chunks)} chunks to BM25 index")
+                except Exception as e:
+                    logging.warning(f"Failed to update BM25 index: {e}")
+                    # Don't fail the entire process if BM25 update fails
+                    
             else:
                 result['chunks_added'] = 0
                 logging.info("All chunks already exist in database")

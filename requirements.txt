@@ -23,3 +23,5 @@ google-auth>=2.29.0
 google-auth-httplib2>=0.2.0
 pypdf
 html2text
+rank-bm25==0.2.2
+nltk==3.8.1
