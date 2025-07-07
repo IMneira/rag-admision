@@ -12,6 +12,15 @@ import hashlib
 from werkzeug.utils import secure_filename
 from pypdf import PdfReader
 import io
+from urllib.parse import urlparse, urlunparse
+
+# URL normalization function
+def normalize_url(url):
+    parsed = urlparse(url.strip())
+    scheme = 'https'  # Fuerza a https
+    netloc = parsed.netloc.replace('www.', '')  # Quita www
+    path = parsed.path.rstrip('/')
+    return urlunparse((scheme, netloc, path, '', '', ''))
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -61,6 +70,7 @@ def save_document_to_data_dir(content, source_url=None):
     
     # Update URL index if source URL provided
     if source_url:
+        source_url = normalize_url(source_url)
         url_index_path = os.path.join(data_dir, 'url_index.json')
         url_index = {}
         
@@ -106,6 +116,13 @@ def health_check():
             'version': '1.0.0'
         }
     )
+
+def extract_title_from_md(md_path):
+    with open(md_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            if line.strip().startswith('# '):
+                return line.strip('# ').strip()
+    return "Sin título"
 
 @api_bp.route('/chat', methods=['POST'])
 @login_required
@@ -165,10 +182,16 @@ def chat():
         # Load URL index and map hashes to URLs
         url_index = load_url_index()
         source_urls = []
+        seen_urls = set()
         for hash_id in doc_hashes:
-            url = url_index.get(hash_id)
-            if url and url not in source_urls:
-                source_urls.append(url)
+            raw_url = url_index.get(hash_id)
+            if raw_url:
+                normalized_url = normalize_url(raw_url)
+                if normalized_url not in seen_urls:
+                    md_path = os.path.join('data', f'{hash_id}.md')
+                    title = extract_title_from_md(md_path) if os.path.exists(md_path) else 'Sin título'
+                    source_urls.append(f"url: {normalized_url}, title: {title}")
+                    seen_urls.add(normalized_url)
         
         # Create and save message to database with conversational context
         message = Message.create_message(
