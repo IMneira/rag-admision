@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user
 from app.services.rag.enhanced_query_engine import EnhancedQueryEngine
-from app.models import Conversation, Message
+from app.models import Conversation, Message, User
 from app.db import flask_db as db
 from app.auth.decorators import login_required, admin_required
 from datetime import datetime
@@ -12,6 +12,9 @@ import hashlib
 from werkzeug.utils import secure_filename
 from pypdf import PdfReader
 import io
+from langchain_chroma import Chroma
+from app.services.rag.embedding import get_embedding
+from app.services.rag.hybrid_search import BM25KeywordSearcher
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -458,6 +461,16 @@ def api_info():
             'path': '/api/memory/stats',
             'method': 'GET',
             'description': 'Get conversation memory system statistics (admin only)'
+        },
+        {
+            'path': '/api/database/health',
+            'method': 'GET',
+            'description': 'Get comprehensive database health check (admin only)'
+        },
+        {
+            'path': '/api/database/pdf-count',
+            'method': 'GET',
+            'description': 'Get detailed PDF document count and statistics (admin only)'
         }
     ]
     
@@ -478,7 +491,9 @@ def api_info():
                 'Conversational memory and context',
                 'Follow-up question detection',
                 'Reference resolution for pronouns',
-                'Progressive conversation summarization'
+                'Progressive conversation summarization',
+                'Database health monitoring',
+                'PDF document count and statistics'
             ]
         }
     )
@@ -624,5 +639,323 @@ def get_memory_statistics():
         return format_response(
             success=False,
             error=f'Failed to get memory statistics: {str(e)}',
+            status_code=500
+        )
+
+
+def get_database_statistics():
+    """Get comprehensive database statistics"""
+    stats = {
+        'sqlite': {'status': 'unknown', 'error': None},
+        'vector_db': {'status': 'unknown', 'error': None},
+        'bm25_index': {'status': 'unknown', 'error': None},
+        'file_system': {'status': 'unknown', 'error': None}
+    }
+    
+    # SQLite database stats
+    try:
+        conversation_count = Conversation.query.count()
+        message_count = Message.query.count()
+        user_count = User.query.count()
+        admin_count = User.query.filter_by(role='admin').count()
+        
+        stats['sqlite'] = {
+            'status': 'healthy',
+            'conversations': conversation_count,
+            'messages': message_count,
+            'users': user_count,
+            'admins': admin_count,
+            'tables': ['conversations', 'messages', 'users'],
+            'connection': 'active'
+        }
+    except Exception as e:
+        stats['sqlite'] = {
+            'status': 'error',
+            'error': str(e)
+        }
+    
+    # Vector database (Chroma) stats
+    try:
+        chroma_path = "chroma"
+        if os.path.exists(chroma_path):
+            db_conn = Chroma(
+                persist_directory=chroma_path,
+                embedding_function=get_embedding()
+            )
+            
+            # Get all items to count
+            all_items = db_conn.get(include=["metadatas"])
+            total_chunks = len(all_items.get("ids", []))
+            
+            # Count unique documents
+            unique_sources = set()
+            pdf_count = 0
+            uploaded_count = 0
+            
+            for metadata in all_items.get("metadatas", []):
+                if metadata and "source" in metadata:
+                    source = metadata["source"]
+                    unique_sources.add(source)
+                    
+                    # Count PDFs (look for .pdf in source or "uploaded:" prefix)
+                    if source.lower().endswith('.pdf') or 'uploaded:' in source.lower():
+                        pdf_count += 1
+                        if 'uploaded:' in source.lower():
+                            uploaded_count += 1
+            
+            stats['vector_db'] = {
+                'status': 'healthy',
+                'total_chunks': total_chunks,
+                'unique_documents': len(unique_sources),
+                'pdf_documents': pdf_count,
+                'uploaded_documents': uploaded_count,
+                'database_path': chroma_path,
+                'embedding_model': 'paraphrase-multilingual-mpnet-base-v2'
+            }
+        else:
+            stats['vector_db'] = {
+                'status': 'missing',
+                'error': 'Chroma database directory not found'
+            }
+    except Exception as e:
+        stats['vector_db'] = {
+            'status': 'error',
+            'error': str(e)
+        }
+    
+    # BM25 index stats
+    try:
+        bm25_path = "bm25_index"
+        index_file = os.path.join(bm25_path, "bm25_index.pkl")
+        
+        if os.path.exists(index_file):
+            # Try to load BM25 searcher to get stats
+            bm25_searcher = BM25KeywordSearcher(bm25_path)
+            
+            stats['bm25_index'] = {
+                'status': 'healthy',
+                'index_path': bm25_path,
+                'index_file_exists': True,
+                'file_size_mb': round(os.path.getsize(index_file) / (1024*1024), 2)
+            }
+        else:
+            stats['bm25_index'] = {
+                'status': 'missing',
+                'error': 'BM25 index file not found'
+            }
+    except Exception as e:
+        stats['bm25_index'] = {
+            'status': 'error',
+            'error': str(e)
+        }
+    
+    # File system stats
+    try:
+        data_path = "data"
+        if os.path.exists(data_path):
+            data_files = os.listdir(data_path)
+            md_files = [f for f in data_files if f.endswith('.md')]
+            
+            # Check URL index
+            url_index_path = os.path.join(data_path, 'url_index.json')
+            url_index_exists = os.path.exists(url_index_path)
+            
+            total_size = 0
+            for file in data_files:
+                file_path = os.path.join(data_path, file)
+                if os.path.isfile(file_path):
+                    total_size += os.path.getsize(file_path)
+            
+            stats['file_system'] = {
+                'status': 'healthy',
+                'data_directory': data_path,
+                'total_files': len(data_files),
+                'markdown_files': len(md_files),
+                'url_index_exists': url_index_exists,
+                'total_size_mb': round(total_size / (1024*1024), 2)
+            }
+        else:
+            stats['file_system'] = {
+                'status': 'missing',
+                'error': 'Data directory not found'
+            }
+    except Exception as e:
+        stats['file_system'] = {
+            'status': 'error',
+            'error': str(e)
+        }
+    
+    return stats
+
+
+def get_pdf_count_details():
+    """Get detailed PDF document count and metadata"""
+    pdf_stats = {
+        'total_pdfs': 0,
+        'uploaded_pdfs': 0,
+        'scraped_pdfs': 0,
+        'pdf_sources': [],
+        'processing_status': {'success': 0, 'failed': 0},
+        'recent_additions': {'last_24h': 0, 'last_week': 0}
+    }
+    
+    try:
+        chroma_path = "chroma"
+        if not os.path.exists(chroma_path):
+            return pdf_stats
+            
+        db_conn = Chroma(
+            persist_directory=chroma_path,
+            embedding_function=get_embedding()
+        )
+        
+        # Get all items with metadata
+        all_items = db_conn.get(include=["metadatas"])
+        
+        # Load URL index for source mapping
+        url_index_path = os.path.join("data", "url_index.json")
+        url_index = {}
+        if os.path.exists(url_index_path):
+            with open(url_index_path, 'r', encoding='utf-8') as f:
+                url_index = json.load(f)
+        
+        # Track unique PDF sources
+        pdf_sources = set()
+        
+        for metadata in all_items.get("metadatas", []):
+            if not metadata or "source" not in metadata:
+                continue
+                
+            source = metadata["source"]
+            
+            # Check if this is a PDF document
+            is_pdf = False
+            source_type = "unknown"
+            
+            # Extract document hash from source
+            if '/' in source:
+                doc_hash = source.split('/')[1].split('.')[0]
+            else:
+                doc_hash = source.split(':')[0] if ':' in source else source
+            
+            # Check URL index for original source
+            original_url = url_index.get(doc_hash, source)
+            
+            if (source.lower().endswith('.pdf') or 
+                'uploaded:' in source.lower() or 
+                original_url.lower().endswith('.pdf')):
+                is_pdf = True
+                pdf_sources.add(doc_hash)
+                
+                if 'uploaded:' in source.lower():
+                    source_type = "uploaded"
+                    pdf_stats['uploaded_pdfs'] += 1
+                else:
+                    source_type = "scraped"
+                    pdf_stats['scraped_pdfs'] += 1
+        
+        pdf_stats['total_pdfs'] = len(pdf_sources)
+        
+        # Get detailed source information
+        for doc_hash in pdf_sources:
+            original_url = url_index.get(doc_hash, doc_hash)
+            pdf_stats['pdf_sources'].append({
+                'document_hash': doc_hash,
+                'original_source': original_url,
+                'type': 'uploaded' if 'uploaded:' in original_url else 'scraped'
+            })
+        
+        # Count successful processing (if document exists in vector DB, it was processed successfully)
+        pdf_stats['processing_status']['success'] = len(pdf_sources)
+        
+        # Get recent additions (check file modification times in data directory)
+        data_path = "data"
+        if os.path.exists(data_path):
+            now = datetime.utcnow()
+            
+            for doc_hash in pdf_sources:
+                file_path = os.path.join(data_path, f"{doc_hash}.md")
+                if os.path.exists(file_path):
+                    file_mtime = datetime.fromtimestamp(os.path.getmtime(file_path))
+                    time_diff = now - file_mtime
+                    
+                    if time_diff.days < 1:
+                        pdf_stats['recent_additions']['last_24h'] += 1
+                    if time_diff.days < 7:
+                        pdf_stats['recent_additions']['last_week'] += 1
+        
+    except Exception as e:
+        pdf_stats['error'] = str(e)
+    
+    return pdf_stats
+
+
+@api_bp.route('/database/health', methods=['GET'])
+@admin_required
+def database_health():
+    """Comprehensive database health check endpoint"""
+    try:
+        stats = get_database_statistics()
+        
+        # Determine overall health status
+        overall_status = "healthy"
+        error_count = 0
+        
+        for system, data in stats.items():
+            if data.get('status') == 'error':
+                overall_status = "error"
+                error_count += 1
+            elif data.get('status') == 'missing':
+                overall_status = "warning" if overall_status == "healthy" else overall_status
+        
+        return format_response(
+            success=True,
+            data={
+                'overall_status': overall_status,
+                'error_count': error_count,
+                'systems': stats,
+                'summary': {
+                    'sqlite_healthy': stats['sqlite']['status'] == 'healthy',
+                    'vector_db_healthy': stats['vector_db']['status'] == 'healthy',
+                    'bm25_healthy': stats['bm25_index']['status'] == 'healthy',
+                    'file_system_healthy': stats['file_system']['status'] == 'healthy'
+                }
+            }
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to get database health: {str(e)}',
+            status_code=500
+        )
+
+
+@api_bp.route('/database/pdf-count', methods=['GET'])
+@admin_required
+def pdf_count():
+    """Get detailed PDF document count and statistics"""
+    try:
+        pdf_stats = get_pdf_count_details()
+        
+        return format_response(
+            success=True,
+            data={
+                'pdf_statistics': pdf_stats,
+                'summary': {
+                    'total_pdfs': pdf_stats['total_pdfs'],
+                    'uploaded_vs_scraped': {
+                        'uploaded': pdf_stats['uploaded_pdfs'],
+                        'scraped': pdf_stats['scraped_pdfs']
+                    },
+                    'recent_activity': pdf_stats['recent_additions']
+                }
+            }
+        )
+        
+    except Exception as e:
+        return format_response(
+            success=False,
+            error=f'Failed to get PDF count: {str(e)}',
             status_code=500
         )
