@@ -169,6 +169,12 @@ def main():
         
         if current_url in visited_urls:
             continue
+
+        current_year = str(time.localtime().tm_year)
+        if "noticias" in current_url and current_year not in current_url:
+            print(f"[SKIP] Skipping news page: {current_url}")
+            visited_urls.add(current_url)
+            continue
         
         print(f"[INFO] Scraping: {current_url}")
         content, links = scrape_content(current_url)
