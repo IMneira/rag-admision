@@ -678,9 +678,19 @@ def get_database_statistics():
     try:
         chroma_path = "chroma"
         if os.path.exists(chroma_path):
+            # Try to initialize embedding function
+            try:
+                embedding_func = get_embedding()
+            except Exception as embed_error:
+                stats['vector_db'] = {
+                    'status': 'error',
+                    'error': f'Embedding initialization failed: {str(embed_error)}'
+                }
+                return stats
+                
             db_conn = Chroma(
                 persist_directory=chroma_path,
-                embedding_function=get_embedding()
+                embedding_function=embedding_func
             )
             
             # Get all items to count
@@ -804,9 +814,16 @@ def get_pdf_count_details():
         if not os.path.exists(chroma_path):
             return pdf_stats
             
+        # Try to initialize embedding function
+        try:
+            embedding_func = get_embedding()
+        except Exception as embed_error:
+            pdf_stats['error'] = f'Embedding initialization failed: {str(embed_error)}'
+            return pdf_stats
+            
         db_conn = Chroma(
             persist_directory=chroma_path,
-            embedding_function=get_embedding()
+            embedding_function=embedding_func
         )
         
         # Get all items with metadata
